@@ -1,0 +1,148 @@
+
+  
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Germania One', sans-serif;
+    background-color: #2B3A4A;
+  }
+  
+  .category-icon {
+    font-size: 48px; /* Tamaño ajustado para el emoji */
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Header */
+  .header {
+    width: 100%;
+    height: 150px;
+    background-color: #7FE9C7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 96px;
+    color: #000000;
+  }
+  
+  /* Content Area */
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* Category Section */
+  .category-section {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .category-text {
+    font-size: 48px;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+  }
+  
+  .category-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2F80ED;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    padding: 10px 20px;
+  }
+  
+  .category-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+  }
+  
+  .category-name {
+    font-size: 48px;
+    color: #FFFFFF;
+  }
+  
+  /* Betting Section */
+  .betting-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    background-color: #B8EBED;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+  }
+  
+  .slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .amount-indicator {
+    background-color: #FFFFFF;
+    border: 5px solid #000000;
+    padding: 10px;
+    font-size: 24px;
+  }
+  
+  .bet-slider {
+    width: 100%;
+    margin-left: 20px;
+  }
+  
+  .balance-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .balance-box, .pot-box {
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 24px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .bet-button, .pass-button {
+    background-color: #F47F26;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 24px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Añadido efecto de transición */
+    font-family: 'Germania One', sans-serif;
+  }
+  
+  .bet-button:hover, .pass-button:hover {
+    background-color: #FFA500; /* Cambia el color a un naranja más claro cuando se pasa el mouse */
+  }
+  
+  
