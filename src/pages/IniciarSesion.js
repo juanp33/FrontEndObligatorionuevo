@@ -11,35 +11,35 @@ function IniciarSesion() {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        'http://backendobligatoriospringboot.railway.internal/api/login',
+        'http://localhost:8080/api/usuarios/login',
         {
           username: username,
           password: password,
+          email: "default@gmail.com"
         },
         {
-          withCredentials: true, // Esto permite que el navegador maneje automáticamente las cookies de sesión
+          headers: {
+            'Content-Type': 'application/json',
+          }
         }
       );
 
-      console.log('Response data:', response.data);
+      // Guardar el nombre de usuario en el localStorage
+      localStorage.setItem('username', username);
+
       setError('');
       console.log('Inicio de sesión exitoso');
-     
+
+      // Redirigir al usuario a la página principal o a otra página protegida.
+      window.location.href = '/jugar'; // Ajusta la URL según tu aplicación.
     } catch (error) {
       if (error.response) {
-        console.error('Error data:', error.response.data);
-        console.error('Status code:', error.response.status);
-        console.error('Headers:', error.response.headers);
         setError('Usuario o contraseña incorrectos');
       } else if (error.request) {
-        console.error('Request made but no response received:', error.request);
         setError('No se recibió respuesta del servidor.');
       } else {
-        console.error('Error during setup:', error.message);
         setError('Ocurrió un error durante la configuración.');
       }
-
-      console.error('Unexpected error:', error.message);
     }
   };
 

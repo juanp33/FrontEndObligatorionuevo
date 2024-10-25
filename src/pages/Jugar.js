@@ -20,8 +20,8 @@ function Jugar() {
             <img src={iconoPerfil} alt="User" />
           </div>
           <div className="user-info">
-            <h3>NOMBRE APELLIDO</h3>
-            <p>NombreApellido@gmail.com</p>
+            <h3>{localStorage.getItem("username")}</h3>
+            
             <p>saldo: 5.00 usd</p>
           </div>
           <button className="cashier-button">CAJERO</button>

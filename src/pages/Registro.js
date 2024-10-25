@@ -23,7 +23,7 @@ const PaginaRegistro = () => {
     try {
       // Realizar la solicitud POST a la API de registro
       const response = await axios.post(
-        'https://backendobligatoriospringboot-production-19dc.up.railway.app/api/auth/register', 
+        'https://backendobligatoriospringboot-production-19dc.up.railway.app/api/usuarios/registrar', 
         {
           username,
           password,
@@ -32,21 +32,36 @@ const PaginaRegistro = () => {
         {
           headers: {
             'Content-Type': 'application/json',
-            'X-API-KEY': 'NacionalNacional', // Asegúrate de que el backend reconozca esta clave si es necesario
           },
+          // Si necesitas enviar cookies, descomenta la siguiente línea:
+          // withCredentials: true,
         }
       );
 
       // Manejo de la respuesta exitosa
-      setMessage('Usuario registrado exitosamente');
-      setError('');
-      setUsername('');
-      setPassword('');
-      setConfirmPassword('');
-      setEmail('');
+      if (response.status === 201) {
+        setMessage('Usuario registrado exitosamente');
+        setError('');
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
+        setEmail('');
+      } else {
+        setError('Error inesperado, intente nuevamente.');
+        setMessage('');
+      }
     } catch (err) {
-      // Manejo de errores
-      setError('Error al registrar usuario: ' + (err.response?.data || 'Inténtalo de nuevo más tarde'));
+      // Manejo de errores con una respuesta específica
+      if (err.response) {
+        // La solicitud fue hecha y el servidor respondió con un código de estado fuera del rango de 2xx
+        setError('Error al registrar usuario: ' + err.response.data.message || 'Inténtalo de nuevo más tarde');
+      } else if (err.request) {
+        // La solicitud fue hecha pero no hubo respuesta
+        setError('Error de conexión: no se pudo contactar con el servidor');
+      } else {
+        // Algo pasó al configurar la solicitud
+        setError('Error: ' + err.message);
+      }
       setMessage('');
     }
   };
