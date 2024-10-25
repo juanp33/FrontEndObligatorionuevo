@@ -11,7 +11,7 @@ function IniciarSesion() {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        'https://backendobligatoriospringboot-production.up.railway.app/api/login',
+        'http://backendobligatoriospringboot.railway.internal/api/login',
         {
           username: username,
           password: password,

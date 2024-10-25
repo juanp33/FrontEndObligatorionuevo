@@ -21,7 +21,7 @@ const PaginaRegistro = () => {
     }
 
     try {
-      const response = await axios.post('https://backendobligatoriospringboot-production.up.railway.app/api/auth/register', {
+      const response = await axios.post('backendobligatoriospringboot-production-19dc.up.railway.app/api/auth/register', {
         username,
         password,
         email,
