@@ -14,32 +14,38 @@ const PaginaRegistro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   
+    // Verificar si las contraseñas coinciden antes de enviar la solicitud
     if (password !== confirmPassword) {
       setError('Las contraseñas no coinciden');
       return;
     }
 
     try {
-      const response = await axios.post('backendobligatoriospringboot-production-19dc.up.railway.app/api/auth/register', {
-        username,
-        password,
-        email,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-API-KEY': 'NacionalNacional'
+      // Realizar la solicitud POST a la API de registro
+      const response = await axios.post(
+        'https://backendobligatoriospringboot-production-19dc.up.railway.app/api/auth/register', 
+        {
+          username,
+          password,
+          email,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-KEY': 'NacionalNacional', // Asegúrate de que el backend reconozca esta clave si es necesario
+          },
         }
-      });
+      );
+
+      // Manejo de la respuesta exitosa
       setMessage('Usuario registrado exitosamente');
       setError('');
-      
       setUsername('');
       setPassword('');
       setConfirmPassword('');
       setEmail('');
     } catch (err) {
+      // Manejo de errores
       setError('Error al registrar usuario: ' + (err.response?.data || 'Inténtalo de nuevo más tarde'));
       setMessage('');
     }
