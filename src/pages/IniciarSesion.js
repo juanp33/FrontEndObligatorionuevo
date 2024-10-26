@@ -14,8 +14,7 @@ function IniciarSesion() {
         'http://localhost:8080/api/usuarios/login',
         {
           username: username,
-          password: password,
-          email: "default@gmail.com"
+          password: password
         },
         {
           headers: {
@@ -24,11 +23,15 @@ function IniciarSesion() {
         }
       );
 
-      // Guardar el nombre de usuario en el localStorage
-      localStorage.setItem('username', username);
+      
+      const loginResponse = response.data;
+      localStorage.setItem('mensaje', loginResponse.mensaje);
+      localStorage.setItem('username', loginResponse.nombreUsuario);
+      localStorage.setItem('email', loginResponse.email);
+      localStorage.setItem('monto', loginResponse.montoSaldo);
 
       setError('');
-      console.log('Inicio de sesión exitoso');
+      console.log('Inicio de sesión exitoso:', loginResponse);
 
       // Redirigir al usuario a la página principal o a otra página protegida.
       window.location.href = '/jugar'; // Ajusta la URL según tu aplicación.

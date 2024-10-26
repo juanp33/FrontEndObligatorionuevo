@@ -1,8 +1,20 @@
 import React from 'react';
 import MasterPage from '../pages/masterPage';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Jugar.css';
 import iconoPerfil from '../images/iconoPerfil.png';
+
 function Jugar() {
+  const navigate = useNavigate();
+  const handleGoToCajero = () => {
+    navigate('/cajero'); // Redirige a la ruta /cajero
+  };
+  
+  const handleLogout = () => {
+    localStorage.clear(); // Limpia el username de localStorage
+    navigate('/login'); // Redirige a la página de inicio de sesión
+  };
+  
   return (
     <MasterPage>
       <div className="jugar-container">
@@ -21,11 +33,11 @@ function Jugar() {
           </div>
           <div className="user-info">
             <h3>{localStorage.getItem("username")}</h3>
-            
-            <p>saldo: 5.00 usd</p>
+            <p>{localStorage.getItem("email")}</p>
+            <p>saldo: {localStorage.getItem("monto")} usd</p>
           </div>
-          <button className="cashier-button">CAJERO</button>
-          <button className="logout-button">CERRAR SESION</button>
+          <button className="cashier-button" onClick={handleGoToCajero}>CAJERO</button>
+          <button className="logout-button" onClick={handleLogout}>CERRAR SESION</button>
         </div>
       </div>
     </MasterPage>
