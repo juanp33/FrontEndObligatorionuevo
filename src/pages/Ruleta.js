@@ -1,3 +1,4 @@
+// Ruleta.js - Componente de la Ruleta (sin cambios)
 import React, { useState, useEffect } from 'react';
 import { Wheel } from 'react-custom-roulette';
 
@@ -14,14 +15,14 @@ const Ruleta = ({ onSelectCategory }) => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const newPrizeNumber = Math.floor(Math.random() * data.length);
-      setPrizeNumber(newPrizeNumber);
-      setMustSpin(true);
-    }, 3000); 
+  const spinWheel = () => {
+    const newPrizeNumber = Math.floor(Math.random() * data.length);
+    setPrizeNumber(newPrizeNumber);
+    setMustSpin(true);
+  };
 
-    return () => clearTimeout(timer);
+  useEffect(() => {
+    spinWheel();
   }, []);
 
   return (
@@ -38,7 +39,6 @@ const Ruleta = ({ onSelectCategory }) => {
         fontSize={48}
         onStopSpinning={() => {
           setMustSpin(false);
-          // Llamar a la función onSelectCategory con la categoría seleccionada
           if (onSelectCategory) {
             onSelectCategory(data[prizeNumber].option);
           }

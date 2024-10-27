@@ -29,7 +29,9 @@ function IniciarSesion() {
       localStorage.setItem('username', loginResponse.nombreUsuario);
       localStorage.setItem('email', loginResponse.email);
       localStorage.setItem('monto', loginResponse.montoSaldo);
-
+      localStorage.setItem('puntajeMAX',loginResponse.jugadorMaxPuntuacion)
+      localStorage.setItem('jugadorVictorias', loginResponse.victorias)
+      localStorage.setItem('jugadorDerrotas', loginResponse.derrotas)
       setError('');
       console.log('Inicio de sesión exitoso:', loginResponse);
 

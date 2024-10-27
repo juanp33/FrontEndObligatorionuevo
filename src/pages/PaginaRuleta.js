@@ -1,83 +1,87 @@
+// PaginaRuleta.js
 import React, { useState } from 'react';
 import MasterPage from './masterPage';
 import Ruleta from './Ruleta';
-import '../styles/PaginaRuleta.css'; // Asegúrate de tener los estilos en este archivo
+import PaginaPregunta from './PaginaPregunta';
+import '../styles/PaginaRuleta.css'; 
 import iconoPerfil from '../images/iconoPerfil.png';
 
-const PaginaRuleta = ({ multiplayer }) => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+const PaginaRuleta = () => {
+  const [puntos, setPuntos] = useState(0);
+  const [preguntaData, setPreguntaData] = useState(null);
+  const [isGameOver, setIsGameOver] = useState(false);
 
-  // Función para manejar la selección de categoría y enviar a la API
+  
+  const fetchPregunta = (categoria) => {
+    fetch(`http://localhost:8080/api/chatgpt/pregunta?categoria=${encodeURIComponent(categoria)}`)
+      .then((response) => response.json())
+      .then((data) => setPreguntaData(data))
+      .catch((error) => console.error('Error al obtener la pregunta:', error));
+  };
+
+ 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-    console.log("Categoría seleccionada:", category);
-    
-    // Enviar la categoría a la API
-    fetch('/api/categorias', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ categoria: category }),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Respuesta de la API:", data);
-      // Maneja la respuesta de la API aquí
-    })
-    .catch((error) => {
-      console.error("Error al enviar la categoría a la API:", error);
-    });
+    fetchPregunta(category);
+  };
+
+  // Maneja la respuesta del usuario en `PaginaPregunta`
+  const handleAnswer = (isCorrect) => {
+    if (isCorrect) {
+      setPuntos((prevPuntos) => prevPuntos + 1); // Incrementa puntos si es correcta
+      setPreguntaData(null); // Limpia la pregunta para volver a la ruleta
+    } else {
+      setIsGameOver(true); // Termina el juego si es incorrecta
+      alert("¡Juego terminado! Puntuación final: " + puntos);
+      if(puntos > localStorage.getItem("puntajeMAX")){
+        localStorage.setItem("PuntajeMAX",puntos)
+      }
+       resetGame()
+    }
+  };
+
+  // Reiniciar el juego
+  const resetGame = () => {
+    setPuntos(0);
+    setPreguntaData(null);
+    setIsGameOver(false);
   };
 
   return (
     <MasterPage>
       <div className="jugar-page">
-        {/* Tarjeta de jugador izquierda */}
-        <div className="player-card">
-          <img
-            src={iconoPerfil}
-            alt="Player 1"
-            className="player-image"
-          />
-          <h2>JAMES WILLIAMS</h2>
-          <div className="player-record">
-            <p>RECORD</p>
-            <p>W: 10</p>
-            <p>L: 5</p>
-          </div>
-        </div>
-
-        {/* Contenedor de la ruleta */}
-        <div className="ruleta-container">
-          <Ruleta onSelectCategory={handleCategorySelect} />
-        </div>
-
-        {/* Tarjeta de jugador derecha, solo si multiplayer es true */}
-        {multiplayer && (
-          <div className="player-card">
-            <img
-              src={iconoPerfil}
-              alt="Player 2"
-              className="player-image"
-            />
-            <h2>JAKE TRUMP</h2>
-            <div className="player-record">
-              <p>RECORD</p>
-              <p>W: 8</p>
-              <p>L: 7</p>
+        {/* Mostramos solo la ruleta si no hay una pregunta cargada y el juego no ha terminado */}
+        {!preguntaData && !isGameOver && (
+          <>
+            {/* Tarjeta de jugador izquierda */}
+            <div className="player-card">
+              <img src={iconoPerfil} alt="Player 1" className="player-image" />
+              <h2>{localStorage.getItem("username")}</h2>
+              <div className="player-record">
+              </div>
             </div>
-          </div>
+
+            {/* Contenedor de la ruleta */}
+            <div className="ruleta-container">
+              <Ruleta onSelectCategory={handleCategorySelect} />
+            </div>
+
+            {/* Tarjeta de puntuación */}
+            <div className="score-card">
+              <h2>PUNTUACIÓN ACTUAL</h2>
+              <p>{puntos}</p>
+              <h2>PUNTUACIÓN MÁXIMA</h2>
+              <p>{localStorage.getItem("puntajeMAX")}</p> {/* Ajusta este valor si tienes un sistema de puntuación máxima */}
+            </div>
+          </>
         )}
 
-        {/* Tarjeta de puntuación si multiplayer es false */}
-        {!multiplayer && (
-          <div className="score-card">
-            <h2>PUNTUACIÓN ACTUAL</h2>
-            <p>50</p>
-            <h2>PUNTUACIÓN MÁXIMA</h2>
-            <p>76</p>
-          </div>
+        {/* Mostramos solo la pregunta si `preguntaData` tiene datos */}
+        {preguntaData && (
+          <PaginaPregunta
+            preguntaData={preguntaData}
+            onAnswer={handleAnswer}
+            puntos={puntos}
+          />
         )}
       </div>
     </MasterPage>
