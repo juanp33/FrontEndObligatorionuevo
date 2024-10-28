@@ -3,12 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Wheel } from 'react-custom-roulette';
 
 const data = [
-  { option: 'Arte', style: { backgroundColor: '#3DA5D9', textColor: '#FFF' } },
-  { option: '🍿', style: { backgroundColor: '#A663CC', textColor: '#FFF' } },
-  { option: '🧪', style: { backgroundColor: '#4CAF50', textColor: '#FFF' } },
-  { option: '🌍', style: { backgroundColor: '#0074D9', textColor: '#FFF' } },
-  { option: '📚', style: { backgroundColor: '#FFCC00', textColor: '#000' } },
-  { option: '⚽', style: { backgroundColor: '#FF4136', textColor: '#FFF' } }
+  { label: 'Arte', option: '🎨', style: { backgroundColor: '#3DA5D9', textColor: '#FFF' } },
+  { label: 'Entretenimiento', option: '🍿', style: { backgroundColor: '#A663CC', textColor: '#FFF' } },
+  { label: 'Ciencia', option: '🧪', style: { backgroundColor: '#4CAF50', textColor: '#FFF' } },
+  { label: 'Geografía, paises, capitales, etc', option: '🌍', style: { backgroundColor: '#0074D9', textColor: '#FFF' } },
+  { label: 'Historia mundial', option: '📚', style: { backgroundColor: '#FFCC00', textColor: '#000' } },
+  { label: 'Deportes', option: '⚽', style: { backgroundColor: '#FF4136', textColor: '#FFF' } }
 ];
 
 const Ruleta = ({ onSelectCategory }) => {
@@ -40,7 +40,7 @@ const Ruleta = ({ onSelectCategory }) => {
         onStopSpinning={() => {
           setMustSpin(false);
           if (onSelectCategory) {
-            onSelectCategory(data[prizeNumber].option);
+            onSelectCategory(data[prizeNumber].label);
           }
         }}
       />

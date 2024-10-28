@@ -1,18 +1,21 @@
-// PaginaPregunta.js
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Preguntas.css';
 
 const PaginaPregunta = ({ preguntaData, onAnswer, puntos }) => {
-  // Extracción de la respuesta correcta (sin el prefijo "a) " o "b) ")
-  const respuestaCorrecta = preguntaData.respuestaCorrecta.split(") ")[1];
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isCorrect, setIsCorrect] = useState(null);
 
   const handleOptionClick = (opcion) => {
-    // Compara solo el texto de la opción con la respuesta correcta
-    if (opcion === respuestaCorrecta) {
-      onAnswer(true); // Llama a onAnswer con true si la respuesta es correcta
-    } else {
-      onAnswer(false); // Llama a onAnswer con false si es incorrecta
-    }
+    const acierto = opcion === preguntaData.respuestas[preguntaData.respuestaCorrecta.charCodeAt(0) - 97];
+    setSelectedOption(opcion);
+    setIsCorrect(acierto);
+
+    
+    setTimeout(() => {
+      onAnswer(acierto);
+      setSelectedOption(null);
+      setIsCorrect(null);
+    }, 3000);
   };
 
   return (
@@ -28,8 +31,12 @@ const PaginaPregunta = ({ preguntaData, onAnswer, puntos }) => {
           {preguntaData.respuestas.map((opcion, index) => (
             <button
               key={index}
-              className="opcion"
+              className={`opcion ${
+                selectedOption !== null && opcion === preguntaData.respuestas[preguntaData.respuestaCorrecta.charCodeAt(0) - 97] ? 'correct' : 
+                selectedOption === opcion && !isCorrect ? 'incorrect' : ''
+              }`}
               onClick={() => handleOptionClick(opcion)}
+              disabled={selectedOption !== null} 
             >
               {opcion}
             </button>

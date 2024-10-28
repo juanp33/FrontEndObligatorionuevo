@@ -27,7 +27,19 @@ body {
     padding: 20px;
     height: calc(100vh - 150px);
   }
+  .opcion {
+    transition: background-color 0.3s ease; /* Transición suave */
+  }
   
+  .opcion.correct {
+    background-color: #4caf50; /* Verde para respuesta correcta */
+    color: #fff;
+  }
+  
+  .opcion.incorrect {
+    background-color: #f44336; /* Rojo para respuesta incorrecta */
+    color: #fff;
+  }
   .turno-box, .puntos-box {
     background-color: #B8EBED;
     border: 2px solid #000000;

@@ -33,7 +33,7 @@ const PaginaRuleta = () => {
       setIsGameOver(true); // Termina el juego si es incorrecta
       alert("¡Juego terminado! Puntuación final: " + puntos);
       if(puntos > localStorage.getItem("puntajeMAX")){
-        localStorage.setItem("PuntajeMAX",puntos)
+        localStorage.setItem("puntajeMAX",puntos)
       }
        resetGame()
     }
