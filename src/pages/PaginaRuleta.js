@@ -14,6 +14,7 @@ const PaginaRuleta = () => {
   const [showModal, setShowModal] = useState(false); // Nuevo estado para mostrar el modal
   const [isNewRecord, setIsNewRecord] = useState(false); 
   const navigate = useNavigate();
+  const username = localStorage.getItem('username');
   const handleGoToJugar = () => {
     navigate('/jugar'); // Redirige a la ruta /cajero
   };
@@ -39,7 +40,9 @@ const PaginaRuleta = () => {
       setShowModal(true); // Mostrar el modal en lugar del alert
       if (puntos > localStorage.getItem("puntajeMAX")) {
         localStorage.setItem("puntajeMAX", puntos);
+        actualizarPuntajeMaxJugador(username, puntos); 
         setIsNewRecord(true);
+
       }else{
         setIsNewRecord(false);
       }
@@ -54,6 +57,24 @@ const PaginaRuleta = () => {
     setShowModal(false); // Oculta el modal cuando se reinicia el juego
     setIsNewRecord(false);
   };
+
+  const actualizarPuntajeMaxJugador = async (username, puntaje) => {
+    try {
+      const params = new URLSearchParams();
+      params.append('username', username);
+      params.append('puntaje', puntaje);
+  
+      const response = await fetch('http://localhost:8080/api/jugadores/actpuntajemax', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded', // Tipo de contenido para @RequestParam
+        },
+        body: params.toString(), // Serializamos los parámetros a la URL
+      });} catch (error) {
+        console.error("Error de red:", error);
+        alert("Hubo un problema con la solicitud");
+      }
+    };
 
   return (
     <MasterPage>
