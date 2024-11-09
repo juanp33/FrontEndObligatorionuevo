@@ -9,7 +9,9 @@ function Jugar() {
   const handleGoToCajero = () => {
     navigate('/cajero'); // Redirige a la ruta /cajero
   };
-  
+  const handleGoToJugarSolo = () => {
+    navigate('/paginaRuleta'); // Redirige a la ruta /cajero
+  };
   const handleLogout = () => {
     localStorage.clear(); // Limpia el username de localStorage
     navigate('/login'); // Redirige a la página de inicio de sesión
@@ -21,7 +23,7 @@ function Jugar() {
         <div className="left-panel">
           <button className="play-button">JUGAR</button>
           <div className="mode-buttons">
-            <button className="mode-button">SOLO</button>
+            <button className="mode-button" onClick={handleGoToJugarSolo}>SOLO</button>
             <button className="mode-button">VS BOTS</button>
             <button className="mode-button">APUESTAS</button>
             <button className="mode-button">COMPETITIVO</button>
