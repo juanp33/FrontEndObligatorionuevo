@@ -94,15 +94,15 @@ const PaginaRuleta = () => {
 
         {/* Modal de juego terminado */}
         {showModal && (
-          <div className="modal">
-            <div className="modal-content">
-              <h2>{isNewRecord ? '¡Felicitaciones, rompiste tu récord!' : 'Juego terminado'}</h2>
-              <p>Puntuación final: {puntos}</p>
-              <button className="modal-button" onClick={resetGame}>Reiniciar Juego</button>
-              <button className="modal-button" onClick={handleGoToJugar}>Volver al Menú</button>
-            </div>
-          </div>
-        )}
+  <div className="modal">
+    <div className="modal-content">
+      <h2 className='frase-terminar'>{isNewRecord ? '¡Felicitaciones, rompiste tu récord!' : 'Juego terminado'}</h2>
+      <p className='puntos'>Puntuación final: {puntos}</p>
+      <button className="modal-button modal-button-restart" onClick={resetGame}>Reiniciar Juego</button>
+      <button className="modal-button modal-button-menu" onClick={handleGoToJugar}>Volver al Menú</button>
+    </div>
+  </div>
+)}
       </div>
     </MasterPage>
   );
