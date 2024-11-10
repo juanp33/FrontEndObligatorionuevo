@@ -10,18 +10,22 @@ import React from 'react';
 import PrivateRoute from './pages/PrivateRoute';
 import IniciarSesion from './pages/IniciarSesion';
 import PaginaRegistro from './pages/Registro';
-import { BrowserRouter as Router, Routes, Route,Navigate  } from 'react-router-dom';
+import Lobby from './pages/Lobby';
+import MultiplesLobbies from './pages/MultiplesLobbies';
 
-function HomePage() {
+function App() {
   const username = localStorage.getItem('username');
 
   return (
     <Router>
       <Routes>
-        <Route 
-          path="/" 
-          element={username ? <Navigate to="/jugar" /> : <Navigate to="/login" />} 
+        {/* Redirección en la raíz dependiendo del estado de sesión */}
+        <Route
+          path="/"
+          element={username ? <Navigate to="/jugar" /> : <Navigate to="/login" />}
         />
+
+        {/* Rutas de acceso público */}
         <Route path="/login" element={<IniciarSesion />} />
         <Route path="/register" element={<PaginaRegistro />} />
         <Route path="/paginaRuleta" element={<PrivateRoute><PaginaRuleta multiplayer ={false} /></PrivateRoute>} />
@@ -36,4 +40,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default App;

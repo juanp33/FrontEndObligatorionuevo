@@ -1,35 +1,41 @@
 import React from 'react';
-import MasterPage from './masterPage'; // Ajusta la ruta según la ubicación del archivo.
-import '../styles/Preguntas.css'; // Asegúrate de que los estilos estén en este archivo.
+import MasterPage from './masterPage';
+import '../styles/Lobby.css';
 
-const PaginaPregunta = () => {
+const Lobby = () => {
   return (
     <MasterPage>
-      <div className="juego-container">
-        <div className="turno-box">
-          <h2>ES TU TURNO!</h2>
+      <div className="lobby-container">
+        <div className="header">
+          <h1>preguntI.Ados</h1>
         </div>
-        <div className="pregunta-box">
-          <div className="pregunta">
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Nisl maecenas vitae ornare mi porttitor ridiculus. Leo
-              pellentesque porta libero sagittis viverra mi ultricies enim.
-            </p>
+
+        <div className="player-cards">
+          <div className="player-card">
+            <div className="player-image" />
+            <h2>JAMES WILLIAMS</h2>
+            <p>RECORD W: L:</p>
           </div>
-          <div className="opciones">
-            <button className="opcion incorrecta">Luis Suarez</button>
-            <button className="opcion correcta">Marcelo Danubio Zalayeta</button>
-            <button className="opcion">Antonio Pacheco</button>
-            <button className="opcion">Hector Scarone</button>
+
+          <div className="middle-panel">
+            <div className="game-info">
+              <p>
+                Lorem ipsum dolor sit amet consectetur. Odio rhoncus proin duis pharetra condimentum nullam. A morbi
+                aenean tempus faucibus integer id semper sed non. Lobortis tempus vitae urna commodo. 
+              </p>
+            </div>
+            <button className="start-game-button">Empezar partida</button>
           </div>
-        </div>
-        <div className="puntos-box">
-          <h2>PUNTOS</h2>
-          <p>500</p>
+
+          <div className="player-card">
+            <div className="player-image" />
+            <h2>JAKE TRUMP</h2>
+            <p>RECORD W: L:</p>
+          </div>
         </div>
       </div>
     </MasterPage>
   );
 };
 
-export default PaginaPregunta;
+export default Lobby;
