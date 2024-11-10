@@ -1,7 +1,8 @@
 import React from 'react';
 /// import MasterPage from './pages/masterPage';
  import Ajustes from './pages/Ajustes';
-
+ import Lobby from './pages/Lobbies';
+ import GameRoom from './pages/GameRoom';
  import Jugar from './pages/Jugar';
  import PaginaCajero from './pages/PaginaCajero';
  import PaginaRuleta from './pages/PaginaRuleta';
@@ -23,11 +24,13 @@ function HomePage() {
         />
         <Route path="/login" element={<IniciarSesion />} />
         <Route path="/register" element={<PaginaRegistro />} />
-        <Route path="/paginaRuleta" element={<PrivateRoute><PaginaRuleta /></PrivateRoute>} />
+        <Route path="/paginaRuleta" element={<PrivateRoute><PaginaRuleta multiplayer ={false} /></PrivateRoute>} />
         <Route path="/ajustes" element={<PrivateRoute><Ajustes /></PrivateRoute>} />
         <Route path="/preguntas" element={<PrivateRoute><Preguntas /></PrivateRoute>} />
         <Route path="/cajero" element={<PrivateRoute><PaginaCajero /></PrivateRoute>} />
         <Route path="/jugar" element={<PrivateRoute><Jugar /></PrivateRoute>} />
+        <Route path="/lobby" element={<PrivateRoute><Lobby /></PrivateRoute>} />
+        <Route path="/lobby/:lobbyId" element={<PrivateRoute><GameRoom /></PrivateRoute>} />
       </Routes>
     </Router>
   );

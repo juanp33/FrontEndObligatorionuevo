@@ -1,25 +1,39 @@
-// PaginaRuleta.js
 import React, { useState } from 'react';
 import MasterPage from './masterPage';
 import Ruleta from './Ruleta';
 import PaginaPregunta from './PaginaPregunta';
-import '../styles/PaginaRuleta.css'; 
+import '../styles/PaginaRuleta.css';
 import iconoPerfil from '../images/iconoPerfil.png';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import useMultiplayer from './UseMultiplayer';
 
 const PaginaRuleta = () => {
+  const { state } = useLocation(); // Obtiene el estado pasado desde GameRoom
+  const isMultiplayer = state?.isMultiplayer || false; // Determina si es multijugador
+  const lobbyId = state?.lobbyId || null;
+
   const [puntos, setPuntos] = useState(0);
-  const [preguntaData, setPreguntaData] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [showModal, setShowModal] = useState(false); // Nuevo estado para mostrar el modal
-  const [isNewRecord, setIsNewRecord] = useState(false); 
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
   const username = localStorage.getItem('username');
-  const handleGoToJugar = () => {
-    navigate('/jugar'); // Redirige a la ruta /cajero
-  };
+
+  // Llamamos a `useMultiplayer` siempre, pero configuramos su lógica dependiendo del modo
+  const {
+    esMiTurno,
+    preguntaData,
+    setPreguntaData,
+    enviarTurno,
+    lobbyActivo,
+  } = useMultiplayer(lobbyId, username);
+
+  // Si no es multijugador, se define que el turno siempre está activo
+  const isTurnoActivo = !isMultiplayer || esMiTurno;
 
   const fetchPregunta = (categoria) => {
+    if (isMultiplayer && !lobbyActivo) {
+      alert("Esperando a que el lobby esté activo...");
+      return;
+    }
     fetch(`http://localhost:8080/api/chatgpt/pregunta?categoria=${encodeURIComponent(categoria)}`)
       .then((response) => response.json())
       .then((data) => setPreguntaData(data))
@@ -27,84 +41,61 @@ const PaginaRuleta = () => {
   };
 
   const handleCategorySelect = (category) => {
+    if (!isTurnoActivo) {
+      alert("Es el turno del otro jugador. Espera tu turno.");
+      return;
+    }
     fetchPregunta(category);
   };
 
-  // Maneja la respuesta del usuario en `PaginaPregunta`
   const handleAnswer = (isCorrect) => {
+    if (!isTurnoActivo) {
+      alert("Es el turno del otro jugador. Espera tu turno.");
+      return;
+    }
+    
     if (isCorrect) {
-      setPuntos((prevPuntos) => prevPuntos + 1); // Incrementa puntos si es correcta
-      setPreguntaData(null); // Limpia la pregunta para volver a la ruleta
+      setPuntos((prevPuntos) => prevPuntos + 1);
     } else {
-      setIsGameOver(true); // Termina el juego si es incorrecta
-      setShowModal(true); // Mostrar el modal en lugar del alert
-      if (puntos > localStorage.getItem("puntajeMAX")) {
-        localStorage.setItem("puntajeMAX", puntos);
-        actualizarPuntajeMaxJugador(username, puntos); 
-        setIsNewRecord(true);
+      setIsGameOver(true);
+      setShowModal(true);
+    }
+    
+    setPreguntaData(null);
 
-      }else{
-        setIsNewRecord(false);
-      }
+    if (isMultiplayer) {
+      enviarTurno(); // Cambia el turno al otro jugador
     }
   };
 
-  // Reiniciar el juego
   const resetGame = () => {
     setPuntos(0);
     setPreguntaData(null);
     setIsGameOver(false);
-    setShowModal(false); // Oculta el modal cuando se reinicia el juego
-    setIsNewRecord(false);
+    setShowModal(false);
   };
-
-  const actualizarPuntajeMaxJugador = async (username, puntaje) => {
-    try {
-      const params = new URLSearchParams();
-      params.append('username', username);
-      params.append('puntaje', puntaje);
-  
-      const response = await fetch('http://localhost:8080/api/jugadores/actpuntajemax', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded', // Tipo de contenido para @RequestParam
-        },
-        body: params.toString(), // Serializamos los parámetros a la URL
-      });} catch (error) {
-        console.error("Error de red:", error);
-        alert("Hubo un problema con la solicitud");
-      }
-    };
 
   return (
     <MasterPage>
       <div className="jugar-page">
-        {/* Mostramos solo la ruleta si no hay una pregunta cargada y el juego no ha terminado */}
         {!preguntaData && !isGameOver && (
           <>
-            {/* Tarjeta de jugador izquierda */}
             <div className="player-card">
               <img src={iconoPerfil} alt="Player 1" className="player-image" />
-              <h2>{localStorage.getItem("username")}</h2>
-              <div className="player-record"></div>
+              <h2>{username}</h2>
             </div>
-
-            {/* Contenedor de la ruleta */}
             <div className="ruleta-container">
-              <Ruleta onSelectCategory={handleCategorySelect} />
+              {/* Solo permite interactuar con la ruleta si es el turno del jugador */}
+              <Ruleta onSelectCategory={handleCategorySelect} disabled={!isTurnoActivo} />
             </div>
-
-            {/* Tarjeta de puntuación */}
             <div className="score-card">
               <h2>PUNTUACIÓN ACTUAL</h2>
               <p>{puntos}</p>
               <h2>PUNTUACIÓN MÁXIMA</h2>
-              <p>{localStorage.getItem("puntajeMAX")}</p> {/* Ajusta este valor si tienes un sistema de puntuación máxima */}
+              <p>{localStorage.getItem("puntajeMAX")}</p>
             </div>
           </>
         )}
-
-        {/* Mostramos solo la pregunta si `preguntaData` tiene datos */}
         {preguntaData && (
           <PaginaPregunta
             preguntaData={preguntaData}
@@ -112,18 +103,15 @@ const PaginaRuleta = () => {
             puntos={puntos}
           />
         )}
-
-        {/* Modal de juego terminado */}
         {showModal && (
-  <div className="modal">
-    <div className="modal-content">
-      <h2 className='frase-terminar'>{isNewRecord ? '¡Felicitaciones, rompiste tu récord!' : 'Juego terminado'}</h2>
-      <p className='puntos'>Puntuación final: {puntos}</p>
-      <button className="modal-button modal-button-restart" onClick={resetGame}>Reiniciar Juego</button>
-      <button className="modal-button modal-button-menu" onClick={handleGoToJugar}>Volver al Menú</button>
-    </div>
-  </div>
-)}
+          <div className="modal">
+            <div className="modal-content">
+              <h2>Juego terminado</h2>
+              <p>Puntuación final: {puntos}</p>
+              <button onClick={resetGame}>Reiniciar</button>
+            </div>
+          </div>
+        )}
       </div>
     </MasterPage>
   );
