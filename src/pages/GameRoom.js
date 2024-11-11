@@ -8,12 +8,13 @@ const GameRoom = () => {
   const { client, lobbyMessages } = useWebSocket(lobbyId);
   const [jugadores, setJugadores] = useState([]);
   const username = localStorage.getItem('username');
-
+  
   // Unirse al lobby al cargar el componente
   useEffect(() => {
     if (client && username && lobbyId) {
       client.send(`/app/lobby/${lobbyId}`, {}, JSON.stringify({ tipo: 'JOIN', jugador: username }));
     }
+    
   }, [client, username, lobbyId]);
 
   // Manejar mensajes del WebSocket
@@ -22,28 +23,34 @@ const GameRoom = () => {
       const latestMessage = lobbyMessages[lobbyMessages.length - 1];
       try {
         const data = JSON.parse(latestMessage);
-
+        console.log(data);
         if (data.tipo === 'START') {
-        
-          navigate('/paginaRuleta', {
-            state: { isMultiplayer: true, lobbyId, jugadores, turno},
+          // Navigate to the next page when the game starts
+          const jugador1= jugadores[0];
+          const jugador2= jugadores[1];
+          
+          navigate('/paginaRuletaMultiplayer', {
+            state: { lobby, jugador1, jugador2 },
           });
         } else {
-          
-          setJugadores((prev) => [...new Set([...prev, data.jugador])]);
+          // Only update jugadores if the new jugador is not already in the list
+          setJugadores((prev) => {
+            // Only add if the jugador is not already in the list
+            return prev.includes(data.jugador) ? prev : [...prev, data];
+          });
         }
       } catch (error) {
         console.error("Error al parsear el mensaje:", error);
       }
     }
-  }, [lobbyMessages, navigate, lobbyId, jugadores]);
+  }, [lobbyMessages, navigate, lobbyId]);
 
   const startGame = () => {
     if (jugadores.length === 2 && client) {
       
       const data = {
         lobbyId: lobbyId,
-        jugadores: jugadores, r
+        jugadores: jugadores, 
       };
       
       

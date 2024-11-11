@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Preguntas.css';
 
-const PaginaPregunta = ({ preguntaData, onAnswer, puntos }) => {
+const PaginaPregunta = ({ preguntaData, onAnswer, puntos,desabilitado }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
 
@@ -36,7 +36,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, puntos }) => {
                 selectedOption === opcion && !isCorrect ? 'incorrect' : ''
               }`}
               onClick={() => handleOptionClick(opcion)}
-              disabled={selectedOption !== null} 
+              disabled={desabilitado} 
             >
               {opcion}
             </button>

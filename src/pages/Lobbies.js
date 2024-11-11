@@ -37,7 +37,7 @@ const Lobbies = () => {
 const handleCreateLobby = () => {
   const newLobbyId = `lobby-${Date.now()}`;
   const username = localStorage.getItem('username');
-
+ client.subscribe(`/topic/lobbies/${newLobbyId}/jugador1`)
   fetch(`http://localhost:8080/api/lobbies/crear?lobbyId=${newLobbyId}&jugador=${username}`, {
     method: 'POST'
   })
@@ -50,6 +50,7 @@ const handleCreateLobby = () => {
 
   const handleJoinLobby = (lobbyId) => {
     const username = localStorage.getItem('username');
+    client.subscribe(`/topic/lobbies/${lobbyId}/jugador2`)
     fetch(`http://localhost:8080/api/lobbies/unir?lobbyId=${lobbyId}&jugador=${username}`, { method: 'POST' })
       .then((response) => response.text())
       .then((message) => {

@@ -10,8 +10,9 @@ import React from 'react';
 import PrivateRoute from './pages/PrivateRoute';
 import IniciarSesion from './pages/IniciarSesion';
 import PaginaRegistro from './pages/Registro';
-import Lobby from './pages/Lobby';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MultiplesLobbies from './pages/MultiplesLobbies';
+import PaginaRuletaMultiplayer from './pages/PaginaRuletaMultiplayer'
 
 function App() {
   const username = localStorage.getItem('username');
@@ -28,7 +29,8 @@ function App() {
         {/* Rutas de acceso público */}
         <Route path="/login" element={<IniciarSesion />} />
         <Route path="/register" element={<PaginaRegistro />} />
-        <Route path="/paginaRuleta" element={<PrivateRoute><PaginaRuleta multiplayer ={false} /></PrivateRoute>} />
+        <Route path="/paginaRuleta" element={<PrivateRoute><PaginaRuleta  /></PrivateRoute>} />
+        <Route path="/paginaRuletaMultiplayer" element={<PrivateRoute><PaginaRuletaMultiplayer  /></PrivateRoute>} />
         <Route path="/ajustes" element={<PrivateRoute><Ajustes /></PrivateRoute>} />
         <Route path="/preguntas" element={<PrivateRoute><Preguntas /></PrivateRoute>} />
         <Route path="/cajero" element={<PrivateRoute><PaginaCajero /></PrivateRoute>} />
