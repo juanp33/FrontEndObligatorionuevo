@@ -1,22 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Preguntas.css';
+import useWebSocket from './UseWebSocket';
 
-const PaginaPregunta = ({ preguntaData, onAnswer, puntos,desabilitado }) => {
+const PaginaPregunta = ({ preguntaData, onAnswer, puntos,desabilitado, lobbyId}) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
+  const { client, lobbyMessages } = useWebSocket(lobbyId);
 
   const handleOptionClick = (opcion) => {
+    client.send(`/app/respuestaCorrecta/${lobbyId}`, {}, JSON.stringify({
+      opcion: opcion,
+      tipo:"opcion"
+    }));
     const acierto = opcion === preguntaData.respuestas[preguntaData.respuestaCorrecta.charCodeAt(0) - 97];
     setSelectedOption(opcion);
     setIsCorrect(acierto);
-
-    
     setTimeout(() => {
       onAnswer(acierto);
       setSelectedOption(null);
       setIsCorrect(null);
     }, 3000);
   };
+
+  useEffect(() => {
+    if (lobbyMessages.length > 0 && desabilitado ) {
+      try {
+        const latestMessage = JSON.parse(lobbyMessages[lobbyMessages.length - 1]);
+        if (latestMessage.tipo === "opcion" ) {
+          handleOptionClick(latestMessage.opcion); // Manejar la opción
+        }
+      }catch(error){
+
+      }
+    }
+    
+  }, [lobbyMessages]);
 
   return (
     <div className="juego-container">

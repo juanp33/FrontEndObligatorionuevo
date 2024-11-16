@@ -65,18 +65,11 @@ const PaginaRuletaMultiplayer = () => {
   
   const fetchPregunta = async () => {
     try {
-      console.log("xd")
+     
       
       
       console.log(turno)
-      if(turno == jugador1){
-        client.send(`/app/pregunta/${lobbyId}`, {}, JSON.stringify({
-          turno: turno,
-          jugadores: [jugador1, jugador2]
-        }));
-        
-      }
-      if(turno == jugador2){
+      if(turno == username){
         client.send(`/app/pregunta/${lobbyId}`, {}, JSON.stringify({
           turno: turno,
           jugadores: [jugador1, jugador2]
@@ -96,8 +89,6 @@ const PaginaRuletaMultiplayer = () => {
     if (isCorrect) {
       setPuntos((prevPuntos) => prevPuntos + 1);
     } else {
-      setIsGameOver(true);
-      setShowModal(true);
     }
     if (turno == jugador1){
       setTurno(jugador2)
@@ -139,17 +130,10 @@ const PaginaRuletaMultiplayer = () => {
             onAnswer={handleAnswer}
             puntos={puntos}
              desabilitado={turno !== username}
+             lobbyId={lobbyId}
           />
         )}
-        {showModal && (
-          <div className="modal">
-            <div className="modal-content">
-              <h2>Juego terminado</h2>
-              <p>Puntuación final: {puntos}</p>
-              <button onClick={resetGame}>Reiniciar</button>
-            </div>
-          </div>
-        )}
+        
       </div>
     </MasterPage>
   );

@@ -35,7 +35,7 @@ const useMultiplayer = (lobbyId, username) => {
     setRondas((prevRondas) => prevRondas + 1);
   };
 
-  return { esMiTurno, preguntaData, setPreguntaData, enviarTurno, rondas, incrementarRondas };
+  return { esMiTurno, preguntaData, setPreguntaData, rondas, incrementarRondas };
 };
 
 export default useMultiplayer;

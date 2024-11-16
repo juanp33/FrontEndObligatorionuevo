@@ -39,7 +39,6 @@ const PaginaRuleta = () => {
   };
 
   const handleCategorySelect = (category) => {
-    
     fetchPregunta(category);
   };
 
