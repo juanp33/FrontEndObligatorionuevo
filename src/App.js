@@ -13,6 +13,7 @@ import PaginaRegistro from './pages/Registro';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MultiplesLobbies from './pages/MultiplesLobbies';
 import PaginaRuletaMultiplayer from './pages/PaginaRuletaMultiplayer'
+import Lobbies from './pages/Lobbies';
 
 function App() {
   const username = localStorage.getItem('username');
@@ -35,7 +36,7 @@ function App() {
         <Route path="/preguntas" element={<PrivateRoute><Preguntas /></PrivateRoute>} />
         <Route path="/cajero" element={<PrivateRoute><PaginaCajero /></PrivateRoute>} />
         <Route path="/jugar" element={<PrivateRoute><Jugar /></PrivateRoute>} />
-        <Route path="/lobby" element={<PrivateRoute><Lobby /></PrivateRoute>} />
+        <Route path="/lobby" element={<PrivateRoute><Lobbies /></PrivateRoute>} />
         <Route path="/lobby/:lobbyId" element={<PrivateRoute><GameRoom /></PrivateRoute>} />
       </Routes>
     </Router>

@@ -1,4 +1,3 @@
-// Ruleta.js - Componente de la Ruleta (sin cambios)
 import React, { useState, useEffect } from 'react';
 import { Wheel } from 'react-custom-roulette';
 
@@ -11,19 +10,31 @@ const data = [
   { label: 'Deportes', option: '⚽', style: { backgroundColor: '#FF4136', textColor: '#FFF' } }
 ];
 
-const Ruleta = ({ onSelectCategory }) => {
+const Ruleta = ({ onSelectCategory, forcedCategory }) => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
 
   const spinWheel = () => {
-    const newPrizeNumber = Math.floor(Math.random() * data.length);
+    let newPrizeNumber;
+
+    // Si hay una categoría forzada, encuentra el índice correspondiente
+    if (forcedCategory) {
+      newPrizeNumber = data.findIndex((item) => item.label === forcedCategory);
+      if (newPrizeNumber === -1) {
+        console.warn('La categoría forzada no se encuentra en la lista de categorías.');
+        newPrizeNumber = Math.floor(Math.random() * data.length);
+      }
+    } else {
+      newPrizeNumber = Math.floor(Math.random() * data.length);
+    }
+
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
   };
 
   useEffect(() => {
     spinWheel();
-  }, []);
+  }, [forcedCategory]); // Vuelve a girar cuando la categoría forzada cambia
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>

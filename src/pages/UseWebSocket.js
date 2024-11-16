@@ -19,15 +19,7 @@ const useWebSocket = (lobbyId) => {
         setLobbyMessages((prevMessages) => [...prevMessages, message.body]);
       });
       
-      stompClient.subscribe(`/topic/lobbies/${lobbyId}/jugador1`, (message) => {
-        setLobbyMessagesJugador1((prevMessages) => [...prevMessages, message.body]);
-      });
-      
-      stompClient.subscribe(`/topic/lobbies/${lobbyId}/jugador2`, (message) => {
-        setLobbyMessagesJugador2((prevMessages) => [...prevMessages, message.body]);
-      });
-
-      
+    
       stompClient.subscribe('/topic/chat', (message) => {
         setChatMessages((prevMessages) => [...prevMessages, message.body]);
       });

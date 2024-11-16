@@ -76,7 +76,7 @@ const PaginaRuleta = () => {
             </div>
             <div className="ruleta-container">
               {/* Solo permite interactuar con la ruleta si es el turno del jugador */}
-              <Ruleta onSelectCategory={handleCategorySelect} disabled={!isTurnoActivo} />
+              <Ruleta onSelectCategory={handleCategorySelect} forcedCategory={"Entretenimiento"} disabled={!isTurnoActivo} />
             </div>
             <div className="score-card">
               <h2>PUNTUACIÓN ACTUAL</h2>

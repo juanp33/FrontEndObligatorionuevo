@@ -6,60 +6,91 @@ import '../styles/PaginaRuleta.css';
 import iconoPerfil from '../images/iconoPerfil.png';
 import { useLocation } from 'react-router-dom';
 import useMultiplayer from './UseMultiplayer';
-
+import useWebSocket from './UseWebSocket';
+import { Client as StompClient, Stomp } from '@stomp/stompjs';
 const PaginaRuletaMultiplayer = () => {
-  const { state } = useLocation(); // Obtiene el estado pasado desde GameRoom
-
+  const { state } = useLocation(); 
+  const [preguntaData,setPreguntaData]= useState(null);
   const lobbyId = state?.lobbyId || null;
-  const [turno, setTurno] = useState(jugador1);
+  const [turno, setTurno] = useState();
   const jugador1 = state?.jugador1 || null;
-  const jugador2 = state?.jugador1 || null;
-  const { client, lobbyMessages,lobbyMessagesJugador1,lobbyMessagesJugador2 } = useWebSocket(lobbyId);
+  const jugador2 = state?.jugador2 || null;
+  const { client, lobbyMessages } = useWebSocket(lobbyId);
   const [puntos, setPuntos] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isTurnoActivo,setIsTurnoActivo]= useState(true);
   const username = localStorage.getItem('username');
 
+  const [stompClient, setStompClient] = useState(null);
+
+  useEffect(() => {
+    // Configura y conecta el cliente Stomp
+    const client = Stomp.client('ws://localhost:8080/game');
+    client.connect({}, () => {
+      console.log('Conectado a WebSocket');
+      setStompClient(client);
+    }, (error) => {
+      console.error('Error al conectar con WebSocket:', error);
+    });
+    setTurno(jugador1);
+    // Desconectar al desmontar
+    return () => {
+      if (client) client.disconnect();
+    };
+    
+  }, []);
+
+  useEffect(() => {
+    if (stompClient) {
+      fetchPregunta();
+    }
+  }, [stompClient]);
   
   useEffect(() => {
-   
-    const handleNewMessage = (message) => {
-      if (message.tipo === 'turno1') {
-        cambiarTurno(); 
-      }
-    };    
-    if (client && lobbyMessages) {
-      client.on('mensaje', handleNewMessage);
-    }
-    return () => {
-      if (client) {
-        client.off('mensaje', handleNewMessage);
-      }
-    };
-  }, [client, lobbyMessages, jugador1, jugador2]);
-
-
-   
-  const cambiarTurno = (turno)=>{
-    if (turno=jugador1){
-        setTurno(jugador2)
+    if (lobbyMessages.length > 0) {
+      try {
+        const latestMessage = JSON.parse(lobbyMessages[lobbyMessages.length - 1]);
         
-    }else {
-        setTurno(jugador1)
+        if (latestMessage.pregunta && latestMessage.turnoActivo) {
+          
+          setPreguntaData(latestMessage.pregunta);
+          setTurno(latestMessage.turnoActivo);
+        }
+      } catch (error) {
+        console.error("Error al procesar el mensaje del WebSocket:", error);
+      }
     }
-  }
-  const fetchPregunta = (categoria) => {
-    if(turno == localStorage.getItem("username")){
-        fetch(`http://localhost:8080/api/chatgpt/pregunta?categoria=${encodeURIComponent(categoria)}`)
-        .then((response) => response.json())
-        .then((data) => setPreguntaData(data))
-        .catch((error) => console.error('Error al obtener la pregunta:', error));
-   
+  }, [lobbyMessages]);
+  
+  const fetchPregunta = async () => {
+    try {
+      console.log("xd")
+      
+      
+      console.log(turno)
+      if(turno == jugador1){
+        client.send(`/app/pregunta/${lobbyId}`, {}, JSON.stringify({
+          turno: turno,
+          jugadores: [jugador1, jugador2]
+        }));
+        
+      }
+      if(turno == jugador2){
+        client.send(`/app/pregunta/${lobbyId}`, {}, JSON.stringify({
+          turno: turno,
+          jugadores: [jugador1, jugador2]
+        }));
+      }
+      
+    } catch (err) {
+
+    }
   };
-}
+
   const handleCategorySelect = (category) => {
-    fetchPregunta(category);
+    
+    fetchPregunta();
   }
   const handleAnswer = (isCorrect) => {
     if (isCorrect) {
@@ -67,6 +98,11 @@ const PaginaRuletaMultiplayer = () => {
     } else {
       setIsGameOver(true);
       setShowModal(true);
+    }
+    if (turno == jugador1){
+      setTurno(jugador2)
+    }else{
+      setTurno(jugador1)
     }
     setPreguntaData(null);
   };
@@ -85,17 +121,15 @@ const PaginaRuletaMultiplayer = () => {
           <>
             <div className="player-card">
               <img src={iconoPerfil} alt="Player 1" className="player-image" />
-              <h2>{username}</h2>
+              <h2>{jugador1} </h2>
             </div>
             <div className="ruleta-container">
               {/* Solo permite interactuar con la ruleta si es el turno del jugador */}
               <Ruleta onSelectCategory={handleCategorySelect}  />
             </div>
-            <div className="score-card">
-              <h2>PUNTUACIÓN ACTUAL</h2>
-              <p>{puntos}</p>
-              <h2>PUNTUACIÓN MÁXIMA</h2>
-              <p>{localStorage.getItem("puntajeMAX")}</p>
+            <div className="player-card">
+              <img src={iconoPerfil} alt="Player 1" className="player-image" />
+              <h2>{jugador2}</h2>
             </div>
           </>
         )}
@@ -104,7 +138,7 @@ const PaginaRuletaMultiplayer = () => {
             preguntaData={preguntaData}
             onAnswer={handleAnswer}
             puntos={puntos}
-            desabilitado={!isTurnoActivo}
+             desabilitado={turno !== username}
           />
         )}
         {showModal && (
@@ -121,4 +155,4 @@ const PaginaRuletaMultiplayer = () => {
   );
 };
 
-export default PaginaRuleta;
+export default PaginaRuletaMultiplayer;

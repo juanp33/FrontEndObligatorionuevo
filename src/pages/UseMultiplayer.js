@@ -10,7 +10,7 @@ const useMultiplayer = (lobbyId, username) => {
   useEffect(() => {
     const client = Stomp.client('ws://localhost:8080/game');
     client.connect({}, () => {
-      // Suscribirse al canal del lobby específico
+     
       client.subscribe(`/topic/lobby/${lobbyId}`, (message) => {
         const data = JSON.parse(message.body);
 
@@ -29,11 +29,7 @@ const useMultiplayer = (lobbyId, username) => {
     };
   }, [lobbyId, username]);
 
-  const enviarTurno = () => {
-    if (stompClient) {
-      stompClient.send('/app/cambiarTurno', {}, JSON.stringify({ lobbyId }));
-    }
-  };
+ 
 
   const incrementarRondas = () => {
     setRondas((prevRondas) => prevRondas + 1);

@@ -24,20 +24,21 @@ const GameRoom = () => {
       try {
         const data = JSON.parse(latestMessage);
         console.log(data);
+        console.log(data.tipo)
         if (data.tipo === 'START') {
           // Navigate to the next page when the game starts
           const jugador1= jugadores[0];
           const jugador2= jugadores[1];
-          
+          console.log(jugador1)
+          console.log(jugador2)
+          console.log(lobbyId)
           navigate('/paginaRuletaMultiplayer', {
-            state: { lobby, jugador1, jugador2 },
+            state: {  jugador1, jugador2, lobbyId },
           });
         } else {
-          // Only update jugadores if the new jugador is not already in the list
-          setJugadores((prev) => {
-            // Only add if the jugador is not already in the list
-            return prev.includes(data.jugador) ? prev : [...prev, data];
-          });
+          
+          setJugadores(data);
+          
         }
       } catch (error) {
         console.error("Error al parsear el mensaje:", error);
@@ -50,7 +51,7 @@ const GameRoom = () => {
       
       const data = {
         lobbyId: lobbyId,
-        jugadores: jugadores, 
+        jugadores: [jugadores[0], jugadores[1]]
       };
       
       
@@ -65,9 +66,7 @@ const GameRoom = () => {
       <h2>Lobby ID: {lobbyId}</h2>
       <h4>Jugadores:</h4>
       <ul>
-        {jugadores.map((jugador, index) => (
-          <li key={index}>{jugador}</li>
-        ))}
+        
       </ul>
       <button onClick={startGame}>Comenzar Juego</button>
     </div>
