@@ -8,18 +8,20 @@ const PaginaPregunta = ({ preguntaData, onAnswer, puntos,desabilitado, lobbyId})
   const { client, lobbyMessages } = useWebSocket(lobbyId);
 
   const handleOptionClick = (opcion) => {
-    client.send(`/app/respuestaCorrecta/${lobbyId}`, {}, JSON.stringify({
-      opcion: opcion,
-      tipo:"opcion"
-    }));
+    if(!desabilitado){
+      client.send(`/app/respuestaCorrecta/${lobbyId}`, {}, JSON.stringify({
+        opcion: opcion,
+        tipo:"opcion"
+      }));
+    }
     const acierto = opcion === preguntaData.respuestas[preguntaData.respuestaCorrecta.charCodeAt(0) - 97];
     setSelectedOption(opcion);
     setIsCorrect(acierto);
     setTimeout(() => {
-      onAnswer(acierto);
+      onAnswer(isCorrect);
       setSelectedOption(null);
       setIsCorrect(null);
-    }, 3000);
+    }, 5000);
   };
 
   useEffect(() => {
@@ -27,14 +29,14 @@ const PaginaPregunta = ({ preguntaData, onAnswer, puntos,desabilitado, lobbyId})
       try {
         const latestMessage = JSON.parse(lobbyMessages[lobbyMessages.length - 1]);
         if (latestMessage.tipo === "opcion" ) {
-          handleOptionClick(latestMessage.opcion); // Manejar la opción
+          handleOptionClick(latestMessage.opcion); 
         }
       }catch(error){
 
       }
     }
     
-  }, [lobbyMessages]);
+  }, [client,lobbyMessages]);
 
   return (
     <div className="juego-container">

@@ -12,10 +12,13 @@ const PaginaRuletaMultiplayer = () => {
   const { state } = useLocation(); 
   const [preguntaData,setPreguntaData]= useState(null);
   const lobbyId = state?.lobbyId || null;
-  const [turno, setTurno] = useState();
+  
   const jugador1 = state?.jugador1 || null;
   const jugador2 = state?.jugador2 || null;
-  const { client, lobbyMessages } = useWebSocket(lobbyId);
+  const [turno, setTurno] = useState(jugador1);
+  
+  const [conectado, setConectado] = useState(null);
+  const { client, lobbyMessages } = useWebSocket(lobbyId,conectado);
   const [puntos, setPuntos] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -24,28 +27,13 @@ const PaginaRuletaMultiplayer = () => {
 
   const [stompClient, setStompClient] = useState(null);
 
-  useEffect(() => {
-    // Configura y conecta el cliente Stomp
-    const client = Stomp.client('ws://localhost:8080/game');
-    client.connect({}, () => {
-      console.log('Conectado a WebSocket');
-      setStompClient(client);
-    }, (error) => {
-      console.error('Error al conectar con WebSocket:', error);
-    });
-    setTurno(jugador1);
-    // Desconectar al desmontar
-    return () => {
-      if (client) client.disconnect();
-    };
-    
-  }, []);
+  
 
   useEffect(() => {
-    if (stompClient) {
+    
       fetchPregunta();
-    }
-  }, [stompClient]);
+      setConectado(true)
+  }, [client]);
   
   useEffect(() => {
     if (lobbyMessages.length > 0) {
@@ -65,17 +53,13 @@ const PaginaRuletaMultiplayer = () => {
   
   const fetchPregunta = async () => {
     try {
-     
-      
-      
       console.log(turno)
-      if(turno == username){
+      if(jugador1 == username){
         client.send(`/app/pregunta/${lobbyId}`, {}, JSON.stringify({
           turno: turno,
           jugadores: [jugador1, jugador2]
         }));
       }
-      
     } catch (err) {
 
     }

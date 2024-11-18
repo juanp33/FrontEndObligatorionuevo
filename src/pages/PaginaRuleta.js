@@ -12,7 +12,7 @@ const PaginaRuleta = () => {
   const { state } = useLocation(); // Obtiene el estado pasado desde GameRoom
   const isMultiplayer = state?.isMultiplayer || false; // Determina si es multijugador
   const lobbyId = state?.lobbyId || null;
-  const { client, lobbyMessages,lobbyMessagesJugador1,lobbyMessagesJugador2 } = useWebSocket(lobbyId);
+  const { client, lobbyMessages } = useWebSocket(lobbyId);
   const [puntos, setPuntos] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [showModal, setShowModal] = useState(false);

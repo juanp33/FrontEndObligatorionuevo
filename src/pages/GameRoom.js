@@ -26,7 +26,7 @@ const GameRoom = () => {
         console.log(data);
         console.log(data.tipo)
         if (data.tipo === 'START') {
-          // Navigate to the next page when the game starts
+         
           const jugador1= jugadores[0];
           const jugador2= jugadores[1];
           console.log(jugador1)
