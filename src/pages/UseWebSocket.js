@@ -7,9 +7,9 @@ const useWebSocket = (lobbyId,conectado) => {
   const [lobbyMessages, setLobbyMessages] = useState([]);
   
   useEffect(() => {
-    if(!conectado){
+    
       const stompClient = Stomp.client('ws://localhost:8080/game'); 
-
+console.log(stompClient)
       stompClient.connect({}, () => {
         console.log('Conectado al servidor WebSocket');
   
@@ -34,8 +34,8 @@ const useWebSocket = (lobbyId,conectado) => {
        
     }
     
-    };
-  }, [lobbyId]);
+    
+  }, []);
 
   return { client, chatMessages, lobbyMessages };
 };

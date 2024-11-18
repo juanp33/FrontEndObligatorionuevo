@@ -10,31 +10,30 @@ const data = [
   { label: 'Deportes', option: '⚽', style: { backgroundColor: '#FF4136', textColor: '#FFF' } }
 ];
 
-const Ruleta = ({ onSelectCategory, forcedCategory }) => {
+const Ruleta = ({ onSelectCategory, forcedCategory, spinWheel }) => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
 
-  const spinWheel = () => {
-    let newPrizeNumber;
-
-    // Si hay una categoría forzada, encuentra el índice correspondiente
-    if (forcedCategory) {
-      newPrizeNumber = data.findIndex((item) => item.label === forcedCategory);
-      if (newPrizeNumber === -1) {
-        console.warn('La categoría forzada no se encuentra en la lista de categorías.');
-        newPrizeNumber = Math.floor(Math.random() * data.length);
-      }
-    } else {
-      newPrizeNumber = Math.floor(Math.random() * data.length);
-    }
-
-    setPrizeNumber(newPrizeNumber);
-    setMustSpin(true);
-  };
-
   useEffect(() => {
-    spinWheel();
-  }, [forcedCategory]); // Vuelve a girar cuando la categoría forzada cambia
+    if (spinWheel) {
+      spinWheel((categoria) => {
+        let newPrizeNumber;
+        console.log(forcedCategory)
+        if (categoria) {
+          newPrizeNumber = data.findIndex((item) => item.label === categoria);
+          if (newPrizeNumber === -1) {
+            console.log('La categoría forzada no se encuentra en la lista de categorías.');
+            newPrizeNumber = Math.floor(Math.random() * data.length);
+          }
+        } else {
+          newPrizeNumber = Math.floor(Math.random() * data.length);
+        }
+
+        setPrizeNumber(newPrizeNumber);
+        setMustSpin(true);
+      });
+    }
+  }, [ spinWheel]);
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
