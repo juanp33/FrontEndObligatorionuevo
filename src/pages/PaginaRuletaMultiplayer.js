@@ -6,6 +6,7 @@ import '../styles/PaginaRuleta.css';
 import iconoPerfil from '../images/iconoPerfil.png';
 import { useLocation } from 'react-router-dom';
 import useWebSocket from './UseWebSocket';
+import { useNavigate } from 'react-router-dom';
 
 const PaginaRuletaMultiplayer = () => {
   const { state } = useLocation();
@@ -75,23 +76,6 @@ const PaginaRuletaMultiplayer = () => {
   const handleCategorySelect = () => {
     setPassToQuestion(true);
   };
-
-  const handleAnswer = (isCorrect) => {
-    // Al responder, incrementar el contador de rondas
-    setRondasCompletadas((prev) => prev + 1);
-
-    if (rondasCompletadas >= 3) {  // 10 rondas han pasado (rondasCompletadas es 0-9, por lo que 9 es la última ronda)
-      setIsGameFinished(true);
-      // Mostrar quién ganó
-      const ganador = puntosJugador1 > puntosJugador2 ? jugador1 : jugador2;
-      console.log(`El juego ha terminado. El ganador es ${ganador}`);
-    } else {
-      setTurno((prevTurno) => (prevTurno === jugador1 ? jugador2 : jugador1)); // Cambiar de turno
-    }
-    
-    setPreguntaData(null);
-    setPassToQuestion(false); // Aquí es donde se usa correctamente
-  };
   
   const handlePuntosTemporales = (puntosTemporales) => {
     if (turno === jugador1) {
@@ -100,7 +84,67 @@ const PaginaRuletaMultiplayer = () => {
       setPuntosJugador2((prev) => prev + puntosTemporales);
     }
   };
+  useEffect(() => {
+    if (rondasCompletadas >= 4) {  // Cuando se completan 3 rondas
+      // Mostrar quién ganó
+      const ganador = puntosJugador1 > puntosJugador2 ? jugador1 : jugador2;
+      console.log(`El juego ha terminado. El ganador es ${ganador}`);
+      console.log(`Puntos ${jugador1}: ${puntosJugador1}, Puntos ${jugador2}: ${puntosJugador2}`);
+      setIsGameFinished(true);
+  
+      // Enviar datos de puntuación al servidor
+      try {
+        if (client && jugador1 === username) {
+          client.send(`/app/finalizarPartida/${lobbyId}`, {}, JSON.stringify({
+            puntajeJugadores: [puntosJugador1, puntosJugador2],
+          }));
+        }
+      } catch (error) {
+        console.error("Error al enviar puntajes finales:", error);
+      }
+    }
+  }, [rondasCompletadas]);
 
+  const handleAnswer = (isCorrect) => {
+    // Al responder, incrementar el contador de rondas
+    setRondasCompletadas((prev) => prev + 1);
+
+    
+
+    
+      
+      // if (client) {
+      //   try {
+      //     client.disconnect(() => {
+      //       console.log("WebSocket desconectado.");
+      //     });
+      //   } catch (disconnectError) {
+      //     console.error("Error al desconectar el WebSocket:", disconnectError);
+      //   }
+      // }
+      
+      
+
+    //   setTimeout(() => {
+    //   setTurno(jugador1);
+    //   setPreguntaData(null);
+    //   setCategoria(null);
+    //   setPassToQuestion(false);
+    //   setPedirPregunta(false);
+    //   setPuntosJugador1(0);
+    //   setPuntosJugador2(0);
+    //   setRondasCompletadas(0);
+    // }, 20000);
+
+    
+      setTurno((prevTurno) => (prevTurno === jugador1 ? jugador2 : jugador1)); // Cambiar de turno
+    
+    
+    setPreguntaData(null);
+    setPassToQuestion(false); // Aquí es donde se usa correctamente
+  };
+  
+  
   const spinRuleta = (categoria) => {
     if (ruletaSpinFuncRef.current) {
       ruletaSpinFuncRef.current(categoria); 
@@ -110,7 +154,7 @@ const PaginaRuletaMultiplayer = () => {
   return (
     <MasterPage>
       <div className="jugar-page">
-        {!passToQuestion && !isGameOver && (
+        {!passToQuestion && !isGameOver && !isGameFinished && (
           <>
             <div className="player-card">
               <img src={iconoPerfil} alt="Player 1" className="player-image" />
