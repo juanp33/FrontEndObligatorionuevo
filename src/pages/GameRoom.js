@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import useWebSocket from './UseWebSocket';
 import MasterPage from './masterPage';
 import '../styles/gameRoom.css';
-
+import imagenPerfil from '../images/iconoPerfil.png'
 const GameRoom = () => {
   const { lobbyId } = useParams();
   const navigate = useNavigate();
@@ -20,10 +20,10 @@ const GameRoom = () => {
 
     // Función para manejar el cierre de la ventana
     const handleWindowClose = () => {
-      if (client && username && lobbyId) {
-        client.send(`/app/lobby/${lobbyId}/leave`, {}, JSON.stringify({ tipo: 'LEAVE', jugador: username }));
+      if(client){
+        client.send(`/app/leave/${lobbyId}`, {}, JSON.stringify({ tipo: 'LEAVE', jugador: username }));
       }
-      setJugadores[1]=null;
+      ;
     };
 
     // Agregar el event listener para beforeunload
@@ -108,7 +108,7 @@ const GameRoom = () => {
         </div>
         <div className="player-card">
           <div className="player-image">
-            <img src="" alt="Jake Trump" />
+            <img src={imagenPerfil} alt="Jake Trump" />
           </div>
           <h3>{jugadores[1]}</h3>
           <p>RECORD W: 0 L: 0</p>
