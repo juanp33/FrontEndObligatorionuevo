@@ -19,7 +19,7 @@ console.log(stompClient)
         });
         
       
-        stompClient.subscribe('/topic/chat', (message) => {
+        stompClient.subscribe(`/topic/chat/${lobbyId}`, (message) => {
           setChatMessages((prevMessages) => [...prevMessages, message.body]);
         });
   
@@ -31,11 +31,14 @@ console.log(stompClient)
   
       
       return () => {
-       
-    }
-    
-    
-  }, []);
+        if (stompClient) {
+         
+          stompClient.disconnect(() => {
+            console.log('Desconectado del servidor WebSocket');
+          });
+        }
+      };
+    }, []);
 
   return { client, chatMessages, lobbyMessages };
 };

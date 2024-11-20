@@ -1,0 +1,107 @@
+
+  h2 {
+    font-family: 'Germania One', sans-serif;
+    font-size: 96px;
+    line-height: 111px;
+    color: #000000;
+    margin: 20px 0;
+  }
+  
+  .players-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .player-card {
+    background: #FFFFFF;
+    border: 4px solid #000000;
+    border-radius: 10px;
+    width: 340px;
+    height: 455px;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .player-image img {
+    width: 142px;
+    height: 165px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  h3 {
+    font-family: 'Germania One', sans-serif;
+    font-size: 28px;
+    margin-top: 20px;
+  }
+  
+  p {
+    font-family: 'Germania One', sans-serif;
+    font-size: 28px;
+    line-height: 33px;
+    margin-top: 10px;
+  }
+  
+  .chat-box {
+    background: #D9D9D9;
+    width: 450px;
+    height: 464px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 0 20px;
+  }
+  
+  .chat-messages {
+    height: 80%;
+    overflow-y: left;
+    font-family: 'Germania One', sans-serif;
+    font-size: 8px;
+    line-height: 15px;
+    color: #000000;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background: #FFF;
+  }
+  
+  .chat-input {
+    display: flex;
+    align-items: left;
+  }
+  
+  .chat-input input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .chat-input button {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #7FE9C7;
+    border: 4px solid #7FE9C7;
+    border-radius: 10px;
+    color: #FFFFFF;
+    font-family: 'Germania One', sans-serif;
+    font-size: 12px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .start-game-button {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #F47F26;
+    border: 4px solid #FF9500;
+    border-radius: 10px;
+    color: #FFFFFF;
+    font-family: 'Germania One', sans-serif;
+    font-size: 40px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
