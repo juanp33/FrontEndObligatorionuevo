@@ -99,6 +99,30 @@ const PaginaRuletaMultiplayer = () => {
             puntajeJugadores: [puntosJugador1, puntosJugador2],
           }));
         }
+        
+      if (client) {
+        try {
+          client.disconnect(() => {
+            console.log("WebSocket desconectado.");
+          });
+        } catch (disconnectError) {
+          console.error("Error al desconectar el WebSocket:", disconnectError);
+        }
+      }
+      
+      
+
+      setTimeout(() => {
+      setTurno(jugador1);
+      setPreguntaData(null);
+      setCategoria(null);
+      setPassToQuestion(false);
+      setPedirPregunta(false);
+      setPuntosJugador1(0);
+      setPuntosJugador2(0);
+      setRondasCompletadas(0);
+    }, 20000);
+
       } catch (error) {
         console.error("Error al enviar puntajes finales:", error);
       }
@@ -106,42 +130,13 @@ const PaginaRuletaMultiplayer = () => {
   }, [rondasCompletadas]);
 
   const handleAnswer = (isCorrect) => {
-    // Al responder, incrementar el contador de rondas
+   
     setRondasCompletadas((prev) => prev + 1);
 
-    
-
-    
-      
-      // if (client) {
-      //   try {
-      //     client.disconnect(() => {
-      //       console.log("WebSocket desconectado.");
-      //     });
-      //   } catch (disconnectError) {
-      //     console.error("Error al desconectar el WebSocket:", disconnectError);
-      //   }
-      // }
-      
-      
-
-    //   setTimeout(() => {
-    //   setTurno(jugador1);
-    //   setPreguntaData(null);
-    //   setCategoria(null);
-    //   setPassToQuestion(false);
-    //   setPedirPregunta(false);
-    //   setPuntosJugador1(0);
-    //   setPuntosJugador2(0);
-    //   setRondasCompletadas(0);
-    // }, 20000);
-
-    
       setTurno((prevTurno) => (prevTurno === jugador1 ? jugador2 : jugador1)); // Cambiar de turno
     
-    
     setPreguntaData(null);
-    setPassToQuestion(false); // Aquí es donde se usa correctamente
+    setPassToQuestion(false); 
   };
   
   

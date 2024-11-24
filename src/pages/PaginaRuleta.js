@@ -18,18 +18,8 @@ const PaginaRuleta = () => {
   const [showModal, setShowModal] = useState(false);
   const username = localStorage.getItem('username');
 
-  // Llamamos a `useMultiplayer` siempre, pero configuramos su lógica dependiendo del modo
-  const {
-    esMiTurno,
-    preguntaData,
-    setPreguntaData,
-    enviarTurno,
-    lobbyActivo,
-  } = useMultiplayer(lobbyId, username);
-
-  // Si no es multijugador, se define que el turno siempre está activo
-  const isTurnoActivo = !isMultiplayer || esMiTurno;
-
+  
+  const [preguntaData,setPreguntaData] = useState();
   const fetchPregunta = (categoria) => {
    
     fetch(`http://localhost:8080/api/chatgpt/pregunta?categoria=${encodeURIComponent(categoria)}`)
@@ -74,8 +64,8 @@ const PaginaRuleta = () => {
               <h2>{username}</h2>
             </div>
             <div className="ruleta-container">
-              {/* Solo permite interactuar con la ruleta si es el turno del jugador */}
-              <Ruleta onSelectCategory={handleCategorySelect} forcedCategory={"Entretenimiento"} disabled={!isTurnoActivo} />
+              
+              <Ruleta onSelectCategory={handleCategorySelect}  />
             </div>
             <div className="score-card">
               <h2>PUNTUACIÓN ACTUAL</h2>
