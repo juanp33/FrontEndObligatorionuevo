@@ -10,9 +10,9 @@ import useWebSocket from './UseWebSocket';
 
 const PaginaRuleta = () => {
   const { state } = useLocation(); // Obtiene el estado pasado desde GameRoom
-  const isMultiplayer = state?.isMultiplayer || false; // Determina si es multijugador
-  const lobbyId = state?.lobbyId || null;
-  const { client, lobbyMessages } = useWebSocket(lobbyId);
+ 
+
+ 
   const [puntos, setPuntos] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -53,7 +53,7 @@ const PaginaRuleta = () => {
     setIsGameOver(false);
     setShowModal(false);
   };
-
+ 
   return (
     <MasterPage>
       <div className="jugar-page">
@@ -65,7 +65,9 @@ const PaginaRuleta = () => {
             </div>
             <div className="ruleta-container">
               
-              <Ruleta onSelectCategory={handleCategorySelect}  />
+              <Ruleta onSelectCategory={handleCategorySelect}
+               spinWheel={true}
+               />
             </div>
             <div className="score-card">
               <h2>PUNTUACIÓN ACTUAL</h2>

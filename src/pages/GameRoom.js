@@ -11,6 +11,7 @@ const GameRoom = () => {
   const [jugadores, setJugadores] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const username = localStorage.getItem('username');
+  const [comienzaElJuego, setComienzaElJuego]= useState(false);
 
   // Unirse al lobby al cargar el componente
   useEffect(() => {
@@ -21,7 +22,10 @@ const GameRoom = () => {
     // Función para manejar el cierre de la ventana
     const handleWindowClose = () => {
       if(client){
-        client.send(`/app/leave/${lobbyId}`, {}, JSON.stringify({ tipo: 'LEAVE', jugador: username }));
+        if(!comienzaElJuego){
+          client.send(`/app/leave/${lobbyId}`, {}, JSON.stringify({ tipo: 'LEAVE', jugador: username }));
+        }
+      
       }
       ;
     };
@@ -63,6 +67,7 @@ const GameRoom = () => {
         lobbyId: lobbyId,
         jugadores: [jugadores[0], jugadores[1]],
       };
+      setComienzaElJuego(true);
       client.send(`/app/start/${lobbyId}`, {}, JSON.stringify(data));
     } else {
       alert('El lobby no está listo para comenzar');
