@@ -24,9 +24,10 @@ function Jugar() {
           <button className="play-button">JUGAR</button>
           <div className="mode-buttons">
             <button className="mode-button" onClick={handleGoToJugarSolo}>SOLO</button>
-            <button className="mode-button">VS BOTS</button>
-            <button className="mode-button">APUESTAS</button>
+           
+            
             <button className="mode-button">COMPETITIVO</button>
+            <button className="mode-button">RANKING</button>
           </div>
         </div>
         <div className="user-card">

@@ -45,4 +45,18 @@ body, html {
     align-items: center;
     justify-content: center;
   }
+  .header-link {
+    text-decoration: none; /* Elimina el subrayado */
+  }
   
+  .header-link h1 {
+    color: #000; /* Asegúrate de mantener el color negro del texto */
+  }
+  
+  .header-link:visited {
+    color: #000; /* Evita que el color cambie al visitar el enlace */
+  }
+  
+  .header-link:hover {
+    text-decoration: none; /* Asegúrate de que no aparezca el subrayado al pasar el mouse */
+  }

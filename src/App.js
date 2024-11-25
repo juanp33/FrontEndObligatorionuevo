@@ -14,7 +14,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import MultiplesLobbies from './pages/MultiplesLobbies';
 import PaginaRuletaMultiplayer from './pages/PaginaRuletaMultiplayer'
 import Lobbies from './pages/Lobbies';
-
+import Ranking from './pages/Ranking'
 function App() {
   const username = localStorage.getItem('username');
 
@@ -29,8 +29,10 @@ function App() {
 
         {/* Rutas de acceso público */}
         <Route path="/login" element={<IniciarSesion />} />
+        <Route path="/login" element={<IniciarSesion />} />
         <Route path="/register" element={<PaginaRegistro />} />
         <Route path="/paginaRuleta" element={<PrivateRoute><PaginaRuleta  /></PrivateRoute>} />
+        <Route path="/ranking" element={<PrivateRoute><Ranking  /></PrivateRoute>} />
         <Route path="/paginaRuletaMultiplayer" element={<PrivateRoute><PaginaRuletaMultiplayer  /></PrivateRoute>} />
         <Route path="/ajustes" element={<PrivateRoute><Ajustes /></PrivateRoute>} />
         <Route path="/preguntas" element={<PrivateRoute><Preguntas /></PrivateRoute>} />

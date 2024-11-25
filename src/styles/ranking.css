@@ -1,0 +1,120 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #2B3A4A;
+    font-family: 'Germania One', sans-serif;
+  }
+  
+  .ranking-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  
+  .filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #FFFFFF;
+  }
+  
+  .dropdown {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .player-table {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #B8EBED;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .table-header, .table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px 0;
+  }
+  
+  .table-header {
+    background-color: #7FE9C7;
+    font-weight: bold;
+    border-radius: 5px;
+    color: #000;
+  }
+  
+  .table-row {
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+  }
+  
+  .table-row:nth-child(odd) {
+    background-color: #E8F8F8;
+  }
+  
+  .table-row:hover {
+    background-color: #D0F0F0;
+  }
+  
+  .table-cell {
+    padding: 5px;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    .table-header, .table-row {
+      grid-template-columns: repeat(2, 1fr); /* Muestra dos columnas en pantallas pequeñas */
+      font-size: 14px;
+    }
+  
+    .table-cell {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .dropdown {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .ranking-container {
+      padding: 10px;
+    }
+  
+    .player-table {
+      padding: 5px;
+    }
+  
+    .table-header, .table-row {
+      grid-template-columns: 1fr; /* Muestra una sola columna en pantallas pequeñas */
+      text-align: left;
+    }
+  
+    .filter-container {
+      flex-direction: column;
+    }
+  
+    .dropdown {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  }
