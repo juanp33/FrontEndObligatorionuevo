@@ -16,6 +16,9 @@ function Jugar() {
     localStorage.clear(); // Limpia el username de localStorage
     navigate('/login'); // Redirige a la página de inicio de sesión
   };
+  const handleGoToRanking = () => {
+    navigate('/ranking'); // Redirige a la ruta /ranking
+  };
   
   return (
     <MasterPage>
@@ -26,8 +29,8 @@ function Jugar() {
             <button className="mode-button" onClick={handleGoToJugarSolo}>SOLO</button>
            
             
-            <button className="mode-button">COMPETITIVO</button>
-            <button className="mode-button">RANKING</button>
+            <button className="mode-button" >COMPETITIVO</button>
+            <button className="mode-button"onClick={handleGoToRanking}>RANKING</button>
           </div>
         </div>
         <div className="user-card">
