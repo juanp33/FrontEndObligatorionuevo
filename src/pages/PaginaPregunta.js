@@ -17,7 +17,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
 
     return () => {
       // Pausa la música cuando se cambia de componente o pregunta
-      audioManager.pauseMusic('musicaPregunta');
+      audioManager.pauseAllMusic('musicaPregunta');
     };
   }, []); // Reproduce la música solo al montar el componente
 
@@ -50,7 +50,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
     }
 
     // Reproduce sonido dependiendo de si la respuesta es correcta o incorrecta
-    if (acierto) {
+    if (acierto && puntosTemporales!=0) {
       audioManager.playSoundEffect('correcto');
     } else {
       audioManager.playSoundEffect('incorrecto');
@@ -90,7 +90,14 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
       }
     };
   }, [preguntaData]); // Reinicia el temporizador al cambiar de pregunta
-
+  
+  useEffect(() => {
+    if (puntosTemporales === 0 && selectedOption === null) {
+      const opcionCorrecta = preguntaData.respuestas[preguntaData.respuestaCorrecta.charCodeAt(0) - 97];
+      handleOptionClick(opcionCorrecta);
+    }
+  }, [puntosTemporales, preguntaData, selectedOption]);
+  
   return (
     <div className="juego-container">
       <div className="turno-box">
