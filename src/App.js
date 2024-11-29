@@ -6,12 +6,12 @@ import React from 'react';
  import Jugar from './pages/Jugar';
  import PaginaCajero from './pages/PaginaCajero';
  import PaginaRuleta from './pages/PaginaRuleta';
- import Preguntas from './pages/Preguntas';
-import PrivateRoute from './pages/PrivateRoute';
+
+import PrivateRoute from './utils/PrivateRoute';
 import IniciarSesion from './pages/IniciarSesion';
 import PaginaRegistro from './pages/Registro';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import MultiplesLobbies from './pages/MultiplesLobbies';
+
 import PaginaRuletaMultiplayer from './pages/PaginaRuletaMultiplayer'
 import Lobbies from './pages/Lobbies';
 import Ranking from './pages/Ranking'
@@ -35,7 +35,7 @@ function App() {
         <Route path="/ranking" element={<PrivateRoute><Ranking  /></PrivateRoute>} />
         <Route path="/paginaRuletaMultiplayer" element={<PrivateRoute><PaginaRuletaMultiplayer  /></PrivateRoute>} />
         <Route path="/ajustes" element={<PrivateRoute><Ajustes /></PrivateRoute>} />
-        <Route path="/preguntas" element={<PrivateRoute><Preguntas /></PrivateRoute>} />
+        
         <Route path="/cajero" element={<PrivateRoute><PaginaCajero /></PrivateRoute>} />
         <Route path="/jugar" element={<PrivateRoute><Jugar /></PrivateRoute>} />
         <Route path="/lobby" element={<PrivateRoute><Lobbies /></PrivateRoute>} />

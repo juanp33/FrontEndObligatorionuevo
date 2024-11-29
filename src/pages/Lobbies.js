@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useWebSocket from './UseWebSocket';
+import useWebSocket from '../utils/UseWebSocket';
 import MasterPage from './masterPage'; // Importa MasterPage
 import '../styles/lobbies.css'; // Importa el CSS responsivo
 import imagenPerfil from '../images/iconoPerfil.png'
@@ -9,7 +9,7 @@ const Lobbies = () => {
   const navigate = useNavigate();
   const { client } = useWebSocket(); // Obtén el cliente WebSocket del hook
 
-  // Función para obtener lobbies activos desde el servidor
+  
   const fetchLobbies = () => {
     fetch('http://localhost:8080/api/lobbies/activos')
       .then((response) => response.json())

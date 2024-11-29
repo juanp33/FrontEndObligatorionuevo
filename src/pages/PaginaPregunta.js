@@ -1,47 +1,59 @@
-import React, { useEffect, useState , useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../styles/Preguntas.css';
-import useWebSocket from './UseWebSocket';
+import useWebSocket from '../utils/UseWebSocket';
+import audioManager from '../utils/AudioManager'; // Importa AudioManager
 
-const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPuntosTemporales}) => {
+const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPuntosTemporales }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
   const { client, lobbyMessages } = useWebSocket(lobbyId);
   const [puntosTemporales, setPuntosTemporales] = useState(600);
-  const intervalRef = useRef(null); // Referencia para el intervalo
+  const intervalRef = useRef(null);
   const [processedMessage, setProcessedMessage] = useState(null);
 
-  const handleOptionClick = (opcion) => {
+  useEffect(() => {
+    // Reproduce música de fondo para la pregunta
+    audioManager.playMusic('musicaPregunta');
 
+    return () => {
+      // Pausa la música cuando se cambia de componente o pregunta
+      audioManager.pauseMusic('musicaPregunta');
+    };
+  }, []); // Reproduce la música solo al montar el componente
+
+  const handleOptionClick = (opcion) => {
     if (processedMessage) return;
 
     setProcessedMessage(true);
 
-    if(!desabilitado){
+    if (!desabilitado) {
       client.send(`/app/respuestaCorrecta/${lobbyId}`, {}, JSON.stringify({
         opcion: opcion,
-        tipo:"opcion"
+        tipo: "opcion",
       }));
     }
+
     const acierto = opcion === preguntaData.respuestas[preguntaData.respuestaCorrecta.charCodeAt(0) - 97];
     setSelectedOption(opcion);
     setIsCorrect(acierto);
-    
+
+    // Detén el temporizador
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
 
+    // Llama a onPuntosTemporales con los puntos temporales calculados
     if (onPuntosTemporales) {
-      console.log("Enviando puntos temporales:", puntosTemporales); // Para depuración
-     if(acierto) {
-      
-      onPuntosTemporales(puntosTemporales); 
+      console.log("Enviando puntos temporales:", puntosTemporales);
+      onPuntosTemporales(acierto ? puntosTemporales : 0);
+    }
 
-     }else{
-      onPuntosTemporales(0); 
-     }
-
-     // Llama a la función de prop
+    // Reproduce sonido dependiendo de si la respuesta es correcta o incorrecta
+    if (acierto) {
+      audioManager.playSoundEffect('correcto');
+    } else {
+      audioManager.playSoundEffect('incorrecto');
     }
 
     setTimeout(() => {
@@ -54,33 +66,30 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
   };
 
   useEffect(() => {
-    if (lobbyMessages.length > 0 && desabilitado ) {
+    if (lobbyMessages.length > 0 && desabilitado) {
       try {
         const latestMessage = JSON.parse(lobbyMessages[lobbyMessages.length - 1]);
-        if (latestMessage.tipo === "opcion" ) {
-          handleOptionClick(latestMessage.opcion); 
+        if (latestMessage.tipo === "opcion") {
+          handleOptionClick(latestMessage.opcion);
         }
-      }catch(error){
-
+      } catch (error) {
+        console.error("Error procesando mensaje del lobby:", error);
       }
     }
-    
-  }, [client,lobbyMessages]);
+  }, [client, lobbyMessages]);
 
   useEffect(() => {
-    // Configura el temporizador para disminuir los puntos
     intervalRef.current = setInterval(() => {
       setPuntosTemporales((prevPuntos) => Math.max(prevPuntos - 1, 0)); // Asegura que no baje de 0
     }, 100);
 
     return () => {
-      // Limpia el intervalo al desmontar o cambiar de pregunta
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
     };
-  }, [preguntaData]);  // Se reinicia el temporizador al cambiar de pregunta
+  }, [preguntaData]); // Reinicia el temporizador al cambiar de pregunta
 
   return (
     <div className="juego-container">

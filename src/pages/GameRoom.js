@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import useWebSocket from './UseWebSocket';
+import useWebSocket from '../utils/UseWebSocket';
 import MasterPage from './masterPage';
 import '../styles/gameRoom.css';
 import imagenPerfil from '../images/iconoPerfil.png'

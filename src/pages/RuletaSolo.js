@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Wheel } from 'react-custom-roulette';
-
+import audioManager from '../utils/AudioManager';
 const data = [
   { label: 'Arte', option: '🎨', style: { backgroundColor: '#3DA5D9', textColor: '#FFF' } },
   { label: 'Entretenimiento', option: '🍿', style: { backgroundColor: '#A663CC', textColor: '#FFF' } },
@@ -13,7 +13,7 @@ const data = [
 const RuletaSolo = ({ onSelectCategory, forcedCategory, spinWheel }) => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-
+  
   useEffect(() => {
     if (spinWheel) {
       spinWheel((categoria) => {
@@ -31,6 +31,7 @@ const RuletaSolo = ({ onSelectCategory, forcedCategory, spinWheel }) => {
 
         setPrizeNumber(newPrizeNumber);
         setMustSpin(true);
+        audioManager.playMusic('musicaRuleta');
       });
     }
   }, [ spinWheel]);
@@ -51,6 +52,7 @@ const RuletaSolo = ({ onSelectCategory, forcedCategory, spinWheel }) => {
           setMustSpin(false);
           if (onSelectCategory) {
             onSelectCategory(data[prizeNumber].label);
+            audioManager.pauseAllMusic('musicaRuleta');
           }
         }}
       />

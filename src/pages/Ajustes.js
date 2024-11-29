@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MasterPage from './masterPage';
-import '../styles/ajustes.css';
+import audioManager from '../utils/AudioManager';
+import textToSpeechManager from '../utils/TextToSpeechManager';
 
 function Ajustes() {
   const [music, setMusic] = useState(true);
   const [soundEffects, setSoundEffects] = useState(true);
   const [textToSpeech, setTextToSpeech] = useState(true);
 
+  useEffect(() => {
+    const savedMusic = localStorage.getItem('music') === 'true';
+    const savedSoundEffects = localStorage.getItem('soundEffects') === 'true';
+    const savedTextToSpeech = localStorage.getItem('textToSpeech') === 'true';
+
+    setMusic(savedMusic);
+    setSoundEffects(savedSoundEffects);
+    setTextToSpeech(savedTextToSpeech);
+
+    // Configurar estados iniciales
+    audioManager.toggleMusic(savedMusic);
+    audioManager.toggleSoundEffects(savedSoundEffects);
+    textToSpeechManager.toggleTextToSpeech(savedTextToSpeech);
+  }, []);
+
   const handleSave = () => {
-   
-    console.log('Guardando cambios:', { music, soundEffects, textToSpeech });
+    localStorage.setItem('music', music);
+    localStorage.setItem('soundEffects', soundEffects);
+    localStorage.setItem('textToSpeech', textToSpeech);
+
+    audioManager.toggleMusic(music);
+    audioManager.toggleSoundEffects(soundEffects);
+    textToSpeechManager.toggleTextToSpeech(textToSpeech);
+
+    alert('Configuraciones guardadas correctamente');
   };
 
   return (
@@ -38,16 +61,12 @@ function Ajustes() {
             checked={textToSpeech}
             onChange={() => setTextToSpeech(!textToSpeech)}
           />
-          <label>Text to speech</label>
+          <label>Text-to-Speech</label>
         </div>
-        <div className="divButton"><button className="save-button" onClick={handleSave}>
-          Guardar cambios
-        </button></div>
-        
+        <button onClick={handleSave}>Guardar cambios</button>
       </div>
     </MasterPage>
   );
 }
 
 export default Ajustes;
-

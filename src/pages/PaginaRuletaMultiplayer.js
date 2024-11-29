@@ -5,7 +5,7 @@ import PaginaPregunta from './PaginaPregunta';
 import '../styles/PaginaRuleta.css';
 import iconoPerfil from '../images/iconoPerfil.png';
 import { useLocation } from 'react-router-dom';
-import useWebSocket from './UseWebSocket';
+import useWebSocket from '../utils/UseWebSocket';
 import { useNavigate } from 'react-router-dom';
 
 const PaginaRuletaMultiplayer = () => {
