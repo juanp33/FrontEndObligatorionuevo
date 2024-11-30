@@ -3,7 +3,7 @@ import '../styles/Preguntas.css';
 import useWebSocket from '../utils/UseWebSocket';
 import audioManager from '../utils/AudioManager'; // Importa AudioManager
 
-const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPuntosTemporales }) => {
+const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPuntosTemporales , turno }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
   const { client, lobbyMessages } = useWebSocket(lobbyId);
@@ -101,7 +101,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
   return (
     <div className="juego-container">
       <div className="turno-box">
-        <h2>ES TU TURNO!</h2>
+      {desabilitado ? "ES EL TURNO DEL RIVAL!" : "ES TU TURNO!"}
       </div>
       <div className="pregunta-box">
         <div className="pregunta">

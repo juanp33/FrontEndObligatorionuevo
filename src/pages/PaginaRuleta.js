@@ -104,10 +104,10 @@ const PaginaRuleta = () => {
         {showModal && (
           <div className="modal">
             <div className="modal-content">
-              <h2>Juego terminado</h2>
+              <h2>{puntos>localStorage.getItem("puntajeMAX") ? "Nuevo Record!" : "Juego Terminado"}</h2>
               <p>Puntuación final: {puntos}</p>
-              <button onClick={resetGame}>Reiniciar</button>
-              <button onClick={handleGoToMenu}>Volver Al Menu</button>
+              <button  className='modal-button-restart' onClick={resetGame}>Reiniciar</button>
+              <button className='modal-button-menu' onClick={handleGoToMenu}>Volver Al Menu</button>
             </div>
           </div>
         )}

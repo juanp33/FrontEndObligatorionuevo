@@ -45,17 +45,20 @@ function Jugar() {
     navigate('/ranking');
   };
 
+  const handleGoTolobby = () => {
+    navigate('/lobby');
+  };
+
   return (
     <div onClick={initializeAudio} onMouseEnter={initializeAudio}>
       {/* onClick y onMouseEnter inicializan el audio */}
       <MasterPage>
         <div className="jugar-container">
           <div className="left-panel">
-            <button className="play-button">JUGAR</button>
             <div className="mode-buttons">
               <button className="mode-button" onClick={handleGoToJugarSolo}>SOLO</button>
-              <button className="mode-button">COMPETITIVO</button>
-              <button className="mode-button" onClick={handleGoToRanking}>RANKING</button>
+              <button className="mode-button" onClick={handleGoTolobby}>COMPETITIVO</button>
+              <button className="mode-button ranking-button" onClick={handleGoToRanking}>RANKING</button>
             </div>
           </div>
           <div className="user-card">

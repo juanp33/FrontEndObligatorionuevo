@@ -1,3 +1,9 @@
+.MasterPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100vh;
+}
 
   h2 {
     font-family: 'Germania One', sans-serif;

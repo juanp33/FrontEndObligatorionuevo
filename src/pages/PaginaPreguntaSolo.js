@@ -54,7 +54,7 @@ const PaginaPreguntaSolo = ({ preguntaData, onAnswer, puntos, desabilitado }) =>
 
   return (
     <div className="juego-container">
-      <div className="player-card">
+      <div className="player">
         <img src={iconoPerfil} alt="Player 1" className="player-image" />
         <h2>{username}</h2>
       </div>

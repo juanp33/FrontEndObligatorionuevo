@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import MasterPage from './masterPage';
 import Ruleta from './Ruleta';
 import PaginaPregunta from './PaginaPregunta';
-import '../styles/PaginaRuleta.css';
+import '../styles/PaginaRuletaMultiplayer.css';
 import iconoPerfil from '../images/iconoPerfil.png';
 import { useLocation } from 'react-router-dom';
 import useWebSocket from '../utils/UseWebSocket';
@@ -177,6 +177,7 @@ const PaginaRuletaMultiplayer = () => {
             desabilitado={turno !== username}
             lobbyId={lobbyId}
             onPuntosTemporales={handlePuntosTemporales} // Pasar la función
+            turno={turno}
           />
         )}
        

@@ -46,10 +46,12 @@
   background-color: #DC8C50;
   color: #FFFFFF;
   font-family: 'Germania One', sans-serif;
-  font-size: 40px;
-  width: 250px;
-  height: 100px;
-  border-radius: 10px;
+  font-size: 50px; /* Texto más grande */
+  width: 100%; /* El ancho será relativo al grid */
+  height: 150px;
+  margin-left: 20px;
+  margin-right: 20px; /* Incrementa la altura */
+  border-radius: 15px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -57,7 +59,13 @@
 
 .mode-button:hover {
   background-color: #c67540; /* Un tono más oscuro al pasar el mouse */
-  transform: scale(1.05); /* Agranda ligeramente el botón */
+  transform: scale(1.1); /* Agranda ligeramente el botón */
+}
+
+/* Botón Ranking ocupa el ancho de dos columnas */
+.ranking-button {
+  grid-column: span 2;
+  height: 150px; /* Mantiene la altura grande */
 }
 
 .user-card {

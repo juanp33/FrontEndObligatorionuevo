@@ -92,7 +92,7 @@ const GameRoom = () => {
             <img src="" alt="James Williams" />
           </div>
           <h3>{jugadores[0]}</h3>
-          <p>RECORD W: 0 L: 0</p>
+          
         </div>
         <div className="chat-box">
         <div className="chat-messages">
@@ -116,7 +116,7 @@ const GameRoom = () => {
             <img src={imagenPerfil} alt="Jake Trump" />
           </div>
           <h3>{jugadores[1]}</h3>
-          <p>RECORD W: 0 L: 0</p>
+          
         </div>
       </div>
       <button className="start-game-button" onClick={startGame}>
