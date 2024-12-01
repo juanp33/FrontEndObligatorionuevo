@@ -28,8 +28,8 @@ function Jugar() {
     }
   };
 
-  const handleGoToCajero = () => {
-    navigate('/cajero');
+  const handleGoToAjustes = () => {
+    navigate('/Ajustes');
   };
 
   const handleGoToJugarSolo = () => {
@@ -66,11 +66,11 @@ function Jugar() {
               <img src={iconoPerfil} alt="User" />
             </div>
             <div className="user-info">
-              <h3>{localStorage.getItem('username')}</h3>
-              <p>{localStorage.getItem('email')}</p>
-              <p>saldo: {localStorage.getItem('monto')} usd</p>
+              <h3>Nombre: {localStorage.getItem('username')}</h3>
+              <p>Email: {localStorage.getItem('email')}</p>
+             
             </div>
-            <button className="cashier-button" onClick={handleGoToCajero}>CAJERO</button>
+            <button className="cashier-button" onClick={handleGoToAjustes}>Ajustes</button>
             <button className="logout-button" onClick={handleLogout}>CERRAR SESIÓN</button>
           </div>
         </div>

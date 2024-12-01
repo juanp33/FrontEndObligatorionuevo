@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Preguntas.css';
 import iconoPerfil from '../images/iconoPerfil.png';
 import audioManager from '../utils/AudioManager';
-import textToSpeechManager from '../utils/TextToSpeechManager'; // Importamos el TextToSpeechManager
+import textToSpeechManager from '../utils/TextToSpeechManager';
 
-const PaginaPreguntaSolo = ({ preguntaData, onAnswer, puntos, desabilitado }) => {
+const PaginaPreguntaSolo = ({ preguntaData, onAnswer, puntos }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(false); // Estado para bloquear los botones
   const username = localStorage.getItem('username');
-  const textToSpeech = localStorage.getItem('textToSpeech')
+  const textToSpeech = localStorage.getItem('textToSpeech');
 
   useEffect(() => {
-    
     audioManager.playMusic('musicaPregunta');
 
-    
     return () => {
       audioManager.pauseAllMusic('musicaPregunta');
     };
@@ -36,6 +35,7 @@ const PaginaPreguntaSolo = ({ preguntaData, onAnswer, puntos, desabilitado }) =>
     const acierto = opcion === preguntaData.respuestas[preguntaData.respuestaCorrecta.charCodeAt(0) - 97];
     setSelectedOption(opcion);
     setIsCorrect(acierto);
+    setIsDisabled(true); // Bloquear botones al seleccionar una opción
 
     // Reproducir efectos de sonido
     if (acierto) {
@@ -49,6 +49,7 @@ const PaginaPreguntaSolo = ({ preguntaData, onAnswer, puntos, desabilitado }) =>
       onAnswer(acierto);
       setSelectedOption(null);
       setIsCorrect(null);
+      setIsDisabled(false); // Desbloquear botones para la próxima pregunta
     }, 5000);
   };
 
@@ -74,7 +75,7 @@ const PaginaPreguntaSolo = ({ preguntaData, onAnswer, puntos, desabilitado }) =>
                   : ''
               }`}
               onClick={() => handleOptionClick(opcion)}
-              disabled={desabilitado}
+              disabled={isDisabled} // Deshabilitar si isDisabled es true
             >
               {opcion}
             </button>

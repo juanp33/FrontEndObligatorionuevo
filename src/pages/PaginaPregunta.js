@@ -3,28 +3,28 @@ import '../styles/Preguntas.css';
 import useWebSocket from '../utils/UseWebSocket';
 import audioManager from '../utils/AudioManager'; // Importa AudioManager
 
-const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPuntosTemporales , turno }) => {
+const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPuntosTemporales, turno }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
   const { client, lobbyMessages } = useWebSocket(lobbyId);
   const [puntosTemporales, setPuntosTemporales] = useState(600);
   const intervalRef = useRef(null);
   const [processedMessage, setProcessedMessage] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(false); // Nuevo estado para bloquear los botones
 
   useEffect(() => {
-    // Reproduce música de fondo para la pregunta
     audioManager.playMusic('musicaPregunta');
 
     return () => {
-      // Pausa la música cuando se cambia de componente o pregunta
       audioManager.pauseAllMusic('musicaPregunta');
     };
-  }, []); // Reproduce la música solo al montar el componente
+  }, []);
 
   const handleOptionClick = (opcion) => {
     if (processedMessage) return;
 
     setProcessedMessage(true);
+    setIsDisabled(true); // Bloquea los botones inmediatamente después de hacer clic
 
     if (!desabilitado) {
       client.send(`/app/respuestaCorrecta/${lobbyId}`, {}, JSON.stringify({
@@ -50,7 +50,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
     }
 
     // Reproduce sonido dependiendo de si la respuesta es correcta o incorrecta
-    if (acierto && puntosTemporales!=0) {
+    if (acierto && puntosTemporales !== 0) {
       audioManager.playSoundEffect('correcto');
     } else {
       audioManager.playSoundEffect('incorrecto');
@@ -62,6 +62,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
       setIsCorrect(null);
       setPuntosTemporales(600);
       setProcessedMessage(null);
+      setIsDisabled(false); // Desbloquea los botones para la siguiente pregunta
     }, 5000);
   };
 
@@ -81,7 +82,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       setPuntosTemporales((prevPuntos) => Math.max(prevPuntos - 1, 0)); // Asegura que no baje de 0
-    }, 100);
+    }, 107);
 
     return () => {
       if (intervalRef.current) {
@@ -90,18 +91,18 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
       }
     };
   }, [preguntaData]); // Reinicia el temporizador al cambiar de pregunta
-  
+
   useEffect(() => {
     if (puntosTemporales === 0 && selectedOption === null) {
       const opcionCorrecta = preguntaData.respuestas[preguntaData.respuestaCorrecta.charCodeAt(0) - 97];
       handleOptionClick(opcionCorrecta);
     }
   }, [puntosTemporales, preguntaData, selectedOption]);
-  
+
   return (
     <div className="juego-container">
       <div className="turno-box">
-      {desabilitado ? "ES EL TURNO DEL RIVAL!" : "ES TU TURNO!"}
+        {desabilitado ? "ES EL TURNO DEL RIVAL!" : "ES TU TURNO!"}
       </div>
       <div className="pregunta-box">
         <div className="pregunta">
@@ -120,7 +121,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
                   : ''
               }`}
               onClick={() => handleOptionClick(opcion)}
-              disabled={desabilitado}
+              disabled={desabilitado || isDisabled} // Bloquear botones si está en estado deshabilitado
             >
               {opcion}
             </button>

@@ -1,12 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import MasterPage from './masterPage';
+import '../styles/ajustes.css';
 import audioManager from '../utils/AudioManager';
 import textToSpeechManager from '../utils/TextToSpeechManager';
+
 
 function Ajustes() {
   const [music, setMusic] = useState(true);
   const [soundEffects, setSoundEffects] = useState(true);
   const [textToSpeech, setTextToSpeech] = useState(true);
+
+  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
+
+  // Inicia la música cuando se haya inicializado el audio
+  useEffect(() => {
+    if (isAudioInitialized) {
+      audioManager.playMusic('musicaMenu');
+    }
+
+    // Pausar toda la música al desmontar el componente
+    return () => {
+      audioManager.pauseAllMusic();
+    };
+  }, [isAudioInitialized]);
+
+  // Inicializa el audio con la primera interacción del usuario
+  const initializeAudio = () => {
+    if (!isAudioInitialized) {
+      setIsAudioInitialized(true);
+    }
+  };
 
   useEffect(() => {
     const savedMusic = localStorage.getItem('music') === 'true';
@@ -36,36 +59,41 @@ function Ajustes() {
   };
 
   return (
+    <div onClick={initializeAudio} onMouseEnter={initializeAudio}>
+
     <MasterPage>
-      <div className="ajustes-container">
-        <h2>Ajustes</h2>
-        <div className="ajustes-option">
-          <input
-            type="checkbox"
-            checked={music}
-            onChange={() => setMusic(!music)}
-          />
-          <label>Música</label>
-        </div>
-        <div className="ajustes-option">
-          <input
-            type="checkbox"
-            checked={soundEffects}
-            onChange={() => setSoundEffects(!soundEffects)}
-          />
-          <label>Efectos de sonido</label>
-        </div>
-        <div className="ajustes-option">
-          <input
-            type="checkbox"
-            checked={textToSpeech}
-            onChange={() => setTextToSpeech(!textToSpeech)}
-          />
-          <label>Text-to-Speech</label>
-        </div>
-        <button onClick={handleSave}>Guardar cambios</button>
-      </div>
+    <div className="ajustes-container">
+  <div className="ajustes-card">
+    <h2>Ajustes</h2>
+    <div className="ajustes-option">
+      <input
+        type="checkbox"
+        checked={music}
+        onChange={() => setMusic(!music)}
+      />
+      <label>Música</label>
+    </div>
+    <div className="ajustes-option">
+      <input
+        type="checkbox"
+        checked={soundEffects}
+        onChange={() => setSoundEffects(!soundEffects)}
+      />
+      <label>Efectos de sonido</label>
+    </div>
+    <div className="ajustes-option">
+      <input
+        type="checkbox"
+        checked={textToSpeech}
+        onChange={() => setTextToSpeech(!textToSpeech)}
+      />
+      <label>Text-to-Speech</label>
+    </div>
+    <button onClick={handleSave}>Guardar cambios</button>
+  </div>
+</div>
     </MasterPage>
+    </div>
   );
 }
 

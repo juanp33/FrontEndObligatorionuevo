@@ -1,60 +1,84 @@
+body {
+  margin: 0;
+  font-family: 'Germania One', sans-serif;
+  background-color: #2B3A4A;
+}
+
 .ajustes-container {
-    background-color: #FFFFFF;
-    margin-top:40px;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 542px;
-    height: 742px;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  justify-content: flex-start; /* Alinea al inicio verticalmente */
+  height: 100vh; /* Ocupa toda la pantalla */
+  padding-top: 100px; /* Más espacio superior */
+
+}
+
+.ajustes-card {
+  background: #FFFFFF;
+  border: 4px solid #000000;
+  border-radius: 10px;
+  padding: 30px;
+  width: 500px; /* Aumenta el ancho */
+  max-width: 90%; /* Adaptable a pantallas pequeñas */
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra ligera */
+  margin-top: 20%;
+}
+
+.ajustes-card h2 {
+  font-size: 48px; /* Título grande */
+  margin-bottom: 30px;
+  color: #000000;
+}
+
+.ajustes-option {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Opciones alineadas a la izquierda */
+  margin-bottom: 20px;
+  font-size: 24px; /* Texto más grande */
+  color: #000000;
+}
+
+.ajustes-option input {
+  margin-right: 15px;
+  transform: scale(1.5); /* Agranda los checkboxes */
+}
+
+button {
+  background-color: #7FE9C7;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 25px; /* Botón más grande */
+  font-size: 20px; /* Texto del botón más grande */
+  font-family: 'Germania One', sans-serif;
+  color: #000000;
+  cursor: pointer;
+  margin-top: 30px; /* Espacio superior para separar */
+}
+
+button:hover {
+  background-color: #65c9a6;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .ajustes-card {
+    width: 95%;
+    padding: 20px;
   }
-  
-  .ajustes-container h2 {
-    font-family: 'Germania One', sans-serif;
-    font-size: 60px;
-    margin-bottom: 20px;
-    color: #000000;
+
+  .ajustes-card h2 {
+    font-size: 36px;
   }
-  
+
   .ajustes-option {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 15px;
-    margin-left:30px;
+    font-size: 20px;
   }
-  
-  .ajustes-option input[type="checkbox"] {
-    margin-right: 10px;
-    transform: scale(1.5);
-  }
-  
-  .ajustes-option label {
-    font-family: 'Germania One', sans-serif;
-    font-size: 40px;
-    color: #000000;
-  }
-  
-  .save-button {
-    background-color: #FF8C00;
-    color: #FFFFFF;
-    font-family: 'Germania One', sans-serif;
+
+  button {
     font-size: 18px;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top:auto;
-    height: 60px;
   }
-  .divButton {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 60%; /* Esto empuja el botón hacia la parte inferior */
-
-  }
-  .save-button:hover {
-    background-color: #FFAA33;
-  }
-  
+}

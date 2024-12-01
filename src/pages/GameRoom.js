@@ -119,9 +119,11 @@ const GameRoom = () => {
           
         </div>
       </div>
-      <button className="start-game-button" onClick={startGame}>
-        Empezar partida
-      </button>
+      {username === jugadores[0] && (
+  <button className="start-game-button" onClick={startGame}>
+    Empezar partida
+  </button>
+)}
     </MasterPage>
   );
 };
