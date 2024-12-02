@@ -14,14 +14,14 @@ const PaginaRegistro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Verificar si las contraseñas coinciden antes de enviar la solicitud
+   
     if (password !== confirmPassword) {
       setError('Las contraseñas no coinciden');
       return;
     }
 
     try {
-      // Realizar la solicitud POST a la API de registro
+      
       const response = await axios.post(
         'http://localhost:8080/api/usuarios/registrar', 
         {
@@ -33,12 +33,11 @@ const PaginaRegistro = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          // Si necesitas enviar cookies, descomenta la siguiente línea:
-          // withCredentials: true,
+         
         }
       );
 
-      // Manejo de la respuesta exitosa
+ 
       if (response.status === 201) {
         setMessage('Usuario registrado exitosamente');
         setError('');
@@ -51,15 +50,15 @@ const PaginaRegistro = () => {
         setMessage('');
       }
     } catch (err) {
-      // Manejo de errores con una respuesta específica
+      
       if (err.response) {
-        // La solicitud fue hecha y el servidor respondió con un código de estado fuera del rango de 2xx
+        
         setError('Error al registrar usuario: ' + err.response.data.message || 'Inténtalo de nuevo más tarde');
       } else if (err.request) {
-        // La solicitud fue hecha pero no hubo respuesta
+       
         setError('Error de conexión: no se pudo contactar con el servidor');
       } else {
-        // Algo pasó al configurar la solicitud
+    
         setError('Error: ' + err.message);
       }
       setMessage('');

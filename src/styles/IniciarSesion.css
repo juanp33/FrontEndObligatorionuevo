@@ -32,18 +32,18 @@
   flex-direction: column;
   width: 100%;
   gap: 15px;
-  margin-bottom: 120px;
+  margin-bottom: 50px;
 }
 
 .login-inputs input {
   padding: 10px;
   font-size: 24px;
-  font-family: 'Germania One', sans-serif; /* Aplica la fuente Germania One */
+  font-family: 'Germania One', sans-serif; 
   border-radius: 5px;
   border: 1px solid #D9D9D9;
   width: 100%;
   box-sizing: border-box;
-  color: #000000; /* Color del texto */
+  color: #000000;
 }
 
 .login-button {

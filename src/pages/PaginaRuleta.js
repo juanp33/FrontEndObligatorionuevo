@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import MasterPage from './masterPage';
-import RuletaSolo from './RuletaSolo.js'; // Importa RuletaSolo
-import PaginaPreguntaSolo from './PaginaPreguntaSolo'; // Importa PaginaPreguntaSolo
+import RuletaSolo from './RuletaSolo.js';
+import PaginaPreguntaSolo from './PaginaPreguntaSolo'; 
 import '../styles/PaginaRuleta.css';
 import iconoPerfil from '../images/iconoPerfil.png';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const PaginaRuleta = () => {
-  const { state } = useLocation(); // Obtiene el estado pasado desde GameRoom
+  const { state } = useLocation(); 
 
   const [puntos, setPuntos] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -40,9 +40,9 @@ const PaginaRuleta = () => {
         localStorage.setItem("puntajeMAX", puntos);
         
         fetch("http://localhost:8080/api/jugadores/actualizarPuntaje", {
-          method: "POST", // Método HTTP
+          method: "POST", 
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded", // Para enviar datos como formulario
+            "Content-Type": "application/x-www-form-urlencoded", 
           },
           body: new URLSearchParams({
             nombre: username,
@@ -82,8 +82,8 @@ const PaginaRuleta = () => {
             </div>
             <div className="ruleta-container">
               <RuletaSolo
-                onSelectCategory={handleCategorySelect} // Mantén el callback para la categoría seleccionada
-                spinWheel={spinWheel} // Ahora se pasa una función
+                onSelectCategory={handleCategorySelect} 
+                spinWheel={spinWheel} 
               />
             </div>
             <div className="score-card">
@@ -95,7 +95,7 @@ const PaginaRuleta = () => {
           </>
         )}
         {preguntaData && (
-          <PaginaPreguntaSolo // Se reemplazó PaginaPregunta por PaginaPreguntaSolo
+          <PaginaPreguntaSolo 
             preguntaData={preguntaData}
             onAnswer={handleAnswer}
             puntos={puntos}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../styles/Preguntas.css';
 import useWebSocket from '../utils/UseWebSocket';
-import audioManager from '../utils/AudioManager'; // Importa AudioManager
+import audioManager from '../utils/AudioManager'; 
 
 const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPuntosTemporales, turno }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -10,7 +10,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
   const [puntosTemporales, setPuntosTemporales] = useState(600);
   const intervalRef = useRef(null);
   const [processedMessage, setProcessedMessage] = useState(null);
-  const [isDisabled, setIsDisabled] = useState(false); // Nuevo estado para bloquear los botones
+  const [isDisabled, setIsDisabled] = useState(false); 
 
   useEffect(() => {
     audioManager.playMusic('musicaPregunta');
@@ -24,7 +24,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
     if (processedMessage) return;
 
     setProcessedMessage(true);
-    setIsDisabled(true); // Bloquea los botones inmediatamente después de hacer clic
+    setIsDisabled(true); 
 
     if (!desabilitado) {
       client.send(`/app/respuestaCorrecta/${lobbyId}`, {}, JSON.stringify({
@@ -37,19 +37,19 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
     setSelectedOption(opcion);
     setIsCorrect(acierto);
 
-    // Detén el temporizador
+    
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
 
-    // Llama a onPuntosTemporales con los puntos temporales calculados
+    
     if (onPuntosTemporales) {
       console.log("Enviando puntos temporales:", puntosTemporales);
       onPuntosTemporales(acierto ? puntosTemporales : 0);
     }
 
-    // Reproduce sonido dependiendo de si la respuesta es correcta o incorrecta
+    
     if (acierto && puntosTemporales !== 0) {
       audioManager.playSoundEffect('correcto');
     } else {
@@ -62,7 +62,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
       setIsCorrect(null);
       setPuntosTemporales(600);
       setProcessedMessage(null);
-      setIsDisabled(false); // Desbloquea los botones para la siguiente pregunta
+      setIsDisabled(false); 
     }, 5000);
   };
 
@@ -81,7 +81,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
-      setPuntosTemporales((prevPuntos) => Math.max(prevPuntos - 1, 0)); // Asegura que no baje de 0
+      setPuntosTemporales((prevPuntos) => Math.max(prevPuntos - 1, 0));
     }, 107);
 
     return () => {
@@ -90,7 +90,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
         intervalRef.current = null;
       }
     };
-  }, [preguntaData]); // Reinicia el temporizador al cambiar de pregunta
+  }, [preguntaData]); 
 
   useEffect(() => {
     if (puntosTemporales === 0 && selectedOption === null) {
@@ -121,7 +121,7 @@ const PaginaPregunta = ({ preguntaData, onAnswer, desabilitado, lobbyId, onPunto
                   : ''
               }`}
               onClick={() => handleOptionClick(opcion)}
-              disabled={desabilitado || isDisabled} // Bloquear botones si está en estado deshabilitado
+              disabled={desabilitado || isDisabled} 
             >
               {opcion}
             </button>

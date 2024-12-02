@@ -4,9 +4,9 @@ import '../styles/PaginaCajero.css';
 import { useNavigate } from 'react-router-dom';
 
 const PaginaCajero = () => {
-  const [monto, setMonto] = useState(50);  // Estado para el monto
-  const [showModal, setShowModal] = useState(false); // Estado para mostrar el modal de depósito exitoso
-  const [mensaje, setMensaje] = useState(''); // Mensaje de respuesta en la interfaz principal
+  const [monto, setMonto] = useState(50);  
+  const [showModal, setShowModal] = useState(false); 
+  const [mensaje, setMensaje] = useState(''); 
   const username = localStorage.getItem('username');
   const navigate = useNavigate();
 
@@ -20,17 +20,16 @@ const PaginaCajero = () => {
         body: JSON.stringify({ username: username, monto }), 
       });
 
-      // Actualizar el monto en el localStorage
+      
       const montoaSumar = parseInt(localStorage.getItem("monto"), 10) || 0;
       const montoFinal = montoaSumar + monto;
       localStorage.setItem("monto", montoFinal);
 
-      setMensaje('');  // Limpiar el mensaje anterior
-      setShowModal(true); // Mostrar el modal de éxito
+      setMensaje('');  
+      setShowModal(true); 
     } catch (error) {
-      setMensaje('Error al realizar el depósito.'); // Mostrar mensaje de error en la interfaz
-      setShowModal(false); // Si hay error, asegurarse de que el modal no se muestre
-    }
+      setMensaje('Error al realizar el depósito.'); 
+      setShowModal(false); 
   };
 
   const handleWithdraw = async () => {
@@ -43,7 +42,7 @@ const PaginaCajero = () => {
         body: JSON.stringify({ username: username, monto }), 
       });
 
-      // Actualizar el monto en el localStorage
+      
       const montoaRestar = parseInt(localStorage.getItem("monto"), 10) || 0;
       const montoFinal = montoaRestar - monto;
       localStorage.setItem("monto", montoFinal);
@@ -55,12 +54,12 @@ const PaginaCajero = () => {
   };
 
   const handleRetryTransaction = () => {
-    setShowModal(false); // Cerrar el modal y permitir hacer otra transacción
-    setMonto(50); // Reiniciar monto por defecto
+    setShowModal(false); 
+    setMonto(50); 
   };
 
   const handleBackToMenu = () => {
-    navigate('/jugar'); // Volver al menú principal
+    navigate('/jugar'); 
   };
 
   return (
@@ -83,11 +82,11 @@ const PaginaCajero = () => {
             <button className="deposit-button" onClick={handleDeposit}>DEPOSITAR</button>
             <button className="withdraw-button" onClick={handleWithdraw}>RETIRAR</button>
           </div>
-          {mensaje && <p className="response-message">{mensaje}</p>} {/* Mostrar error si ocurre */}
+          {mensaje && <p className="response-message">{mensaje}</p>} 
         </div>
       </div>
 
-      {/* Modal de éxito del depósito */}
+      {}
       {showModal && (
   <div className="modal-container">
     <div className="modal">
@@ -103,5 +102,6 @@ const PaginaCajero = () => {
     </MasterPage>
   );
 };
+}
 
 export default PaginaCajero;

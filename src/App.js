@@ -21,13 +21,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Redirección en la raíz dependiendo del estado de sesión */}
+       
         <Route
           path="/"
           element={username ? <Navigate to="/jugar" /> : <Navigate to="/login" />}
         />
 
-        {/* Rutas de acceso público */}
+       
         <Route path="/login" element={<IniciarSesion />} />
         <Route path="/login" element={<IniciarSesion />} />
         <Route path="/register" element={<PaginaRegistro />} />

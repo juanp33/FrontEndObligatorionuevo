@@ -9,19 +9,18 @@ function Jugar() {
   const navigate = useNavigate();
   const [isAudioInitialized, setIsAudioInitialized] = useState(false);
 
-  // Inicia la música cuando se haya inicializado el audio
+  
   useEffect(() => {
     if (isAudioInitialized) {
       audioManager.playMusic('musicaMenu');
     }
 
-    // Pausar toda la música al desmontar el componente
+  
     return () => {
       audioManager.pauseAllMusic();
     };
   }, [isAudioInitialized]);
 
-  // Inicializa el audio con la primera interacción del usuario
   const initializeAudio = () => {
     if (!isAudioInitialized) {
       setIsAudioInitialized(true);
@@ -51,7 +50,7 @@ function Jugar() {
 
   return (
     <div onClick={initializeAudio} onMouseEnter={initializeAudio}>
-      {/* onClick y onMouseEnter inicializan el audio */}
+      
       <MasterPage>
         <div className="jugar-container">
           <div className="left-panel">

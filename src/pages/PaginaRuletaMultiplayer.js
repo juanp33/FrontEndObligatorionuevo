@@ -36,7 +36,7 @@ const PaginaRuletaMultiplayer = () => {
       const timer = setTimeout(() => {
         fetchPregunta()
         console.log("Este es el de turno")
-      }, 500); // 2000 ms = 2 segundos
+      }, 500); 
     
       return () => clearTimeout(timer);
     }
@@ -85,14 +85,14 @@ const PaginaRuletaMultiplayer = () => {
     }
   };
   useEffect(() => {
-    if (rondasCompletadas >= 4) {  // Cuando se completan 3 rondas
-      // Mostrar quién ganó
+    if (rondasCompletadas >= 4) {  
+     
       const ganador = puntosJugador1 > puntosJugador2 ? jugador1 : jugador2;
       console.log(`El juego ha terminado. El ganador es ${ganador}`);
       console.log(`Puntos ${jugador1}: ${puntosJugador1}, Puntos ${jugador2}: ${puntosJugador2}`);
       setIsGameFinished(true);
   
-      // Enviar datos de puntuación al servidor
+     
       try {
         if (client && jugador1 === username) {
           client.send(`/app/finalizarPartida/${lobbyId}`, {}, JSON.stringify({
@@ -159,7 +159,7 @@ const PaginaRuletaMultiplayer = () => {
             <div className="ruleta-container">
               <Ruleta
                 onSelectCategory={handleCategorySelect}
-                spinWheel={(spinFunc) => (ruletaSpinFuncRef.current = spinFunc)} // Guarda la función de giro
+                spinWheel={(spinFunc) => (ruletaSpinFuncRef.current = spinFunc)} 
               />
             </div>
             <div className="player-card">
@@ -176,7 +176,7 @@ const PaginaRuletaMultiplayer = () => {
             puntos={turno === jugador1 ? puntosJugador1 : puntosJugador2}
             desabilitado={turno !== username}
             lobbyId={lobbyId}
-            onPuntosTemporales={handlePuntosTemporales} // Pasar la función
+            onPuntosTemporales={handlePuntosTemporales} 
             turno={turno}
           />
         )}

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useWebSocket from '../utils/UseWebSocket';
-import MasterPage from './masterPage'; // Importa MasterPage
-import '../styles/lobbies.css'; // Importa el CSS responsivo
+import MasterPage from './masterPage'; 
+import '../styles/lobbies.css'; 
 import imagenPerfil from '../images/iconoPerfil.png'
 const Lobbies = () => {
   const [lobbies, setLobbies] = useState([]);
   const navigate = useNavigate();
-  const { client } = useWebSocket(); // Obtén el cliente WebSocket del hook
+  const { client } = useWebSocket(); 
 
   
   const fetchLobbies = () => {
@@ -43,7 +43,7 @@ const Lobbies = () => {
     })
     .then(() => {
       alert(`Lobby ${newLobbyId} creado`);
-      navigate(`/lobby/${newLobbyId}`); // Redirigir al lobby creado
+      navigate(`/lobby/${newLobbyId}`); 
     })
     .catch((error) => console.error('Error al crear el lobby:', error));
   };
@@ -55,9 +55,9 @@ const Lobbies = () => {
       .then((response) => response.text())
       .then((message) => {
         if (message === "Jugador añadido correctamente") {
-          navigate(`/lobby/${lobbyId}`); // Redirigir al lobby
+          navigate(`/lobby/${lobbyId}`); 
         } else {
-          alert(message); // Mostrar mensaje de error si el lobby está completo
+          alert(message); 
         }
       })
       .catch((error) => console.error('Error al unirse al lobby:', error));

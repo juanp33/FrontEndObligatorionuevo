@@ -2,15 +2,14 @@ import React from 'react';
 import MasterPage from './masterPage';
 import '../styles/paginaApuestas.css';
 
-// Componente PaginaApuestas
+
 const PaginaApuestas = () => {
   return (
     <MasterPage>
     
-      {/* Categoría Seleccionada */}
       
       <div className="content">
-        {/* Categoría Seleccionada */}
+     
         <div className="category-section">
           <h2 className="category-text">LA CATEGORIA SELECCIONADA ES :</h2>
           <div className="category-box">
@@ -19,7 +18,7 @@ const PaginaApuestas = () => {
           </div>
         </div>
 
-        {/* Betting Section */}
+     
         <div className="betting-section">
           <div className="slider-container">
             <div className="amount-indicator">

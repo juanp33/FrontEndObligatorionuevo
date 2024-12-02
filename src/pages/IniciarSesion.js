@@ -35,8 +35,8 @@ function IniciarSesion() {
       setError('');
       console.log('Inicio de sesión exitoso:', loginResponse);
 
-      // Redirigir al usuario a la página principal o a otra página protegida.
-      window.location.href = '/jugar'; // Ajusta la URL según tu aplicación.
+    
+      window.location.href = '/jugar'; 
     } catch (error) {
       if (error.response) {
         setError('Usuario o contraseña incorrectos');

@@ -12,19 +12,19 @@ function Ajustes() {
 
   const [isAudioInitialized, setIsAudioInitialized] = useState(false);
 
-  // Inicia la música cuando se haya inicializado el audio
+  
   useEffect(() => {
     if (isAudioInitialized) {
       audioManager.playMusic('musicaMenu');
     }
 
-    // Pausar toda la música al desmontar el componente
+  
     return () => {
       audioManager.pauseAllMusic();
     };
   }, [isAudioInitialized]);
 
-  // Inicializa el audio con la primera interacción del usuario
+  
   const initializeAudio = () => {
     if (!isAudioInitialized) {
       setIsAudioInitialized(true);
@@ -40,7 +40,7 @@ function Ajustes() {
     setSoundEffects(savedSoundEffects);
     setTextToSpeech(savedTextToSpeech);
 
-    // Configurar estados iniciales
+    
     audioManager.toggleMusic(savedMusic);
     audioManager.toggleSoundEffects(savedSoundEffects);
     textToSpeechManager.toggleTextToSpeech(savedTextToSpeech);
