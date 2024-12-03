@@ -45,7 +45,7 @@ const Ranking = () => {
     });
   };
 
-  const sortedPlayers = getSortedPlayers(); // Llama a getSortedPlayers para obtener los jugadores ordenados
+  const sortedPlayers = getSortedPlayers(); 
 
   return (
     <MasterPage>

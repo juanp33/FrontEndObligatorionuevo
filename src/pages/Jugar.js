@@ -15,12 +15,13 @@ function Jugar() {
       audioManager.playMusic('musicaMenu');
     }
 
-  
+    
     return () => {
       audioManager.pauseAllMusic();
     };
   }, [isAudioInitialized]);
 
+  
   const initializeAudio = () => {
     if (!isAudioInitialized) {
       setIsAudioInitialized(true);
@@ -50,7 +51,7 @@ function Jugar() {
 
   return (
     <div onClick={initializeAudio} onMouseEnter={initializeAudio}>
-      
+      {/* onClick y onMouseEnter inicializan el audio */}
       <MasterPage>
         <div className="jugar-container">
           <div className="left-panel">

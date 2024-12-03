@@ -18,13 +18,13 @@ function Ajustes() {
       audioManager.playMusic('musicaMenu');
     }
 
-  
+   
     return () => {
       audioManager.pauseAllMusic();
     };
   }, [isAudioInitialized]);
 
-  
+
   const initializeAudio = () => {
     if (!isAudioInitialized) {
       setIsAudioInitialized(true);
@@ -40,7 +40,7 @@ function Ajustes() {
     setSoundEffects(savedSoundEffects);
     setTextToSpeech(savedTextToSpeech);
 
-    
+ 
     audioManager.toggleMusic(savedMusic);
     audioManager.toggleSoundEffects(savedSoundEffects);
     textToSpeechManager.toggleTextToSpeech(savedTextToSpeech);

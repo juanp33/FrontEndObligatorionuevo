@@ -35,7 +35,7 @@ function IniciarSesion() {
       setError('');
       console.log('Inicio de sesión exitoso:', loginResponse);
 
-    
+ 
       window.location.href = '/jugar'; 
     } catch (error) {
       if (error.response) {

@@ -13,13 +13,13 @@ const GameRoom = () => {
   const username = localStorage.getItem('username');
   const [comienzaElJuego, setComienzaElJuego]= useState(false);
 
-  // Unirse al lobby al cargar el componente
+ 
   useEffect(() => {
     if (client && username && lobbyId) {
       client.send(`/app/lobby/${lobbyId}`, {}, JSON.stringify({ tipo: 'JOIN', jugador: username }));
     }
 
-    // Función para manejar el cierre de la ventana
+  
     const handleWindowClose = () => {
       if(client){
         if(!comienzaElJuego){
@@ -30,17 +30,16 @@ const GameRoom = () => {
       ;
     };
 
-    // Agregar el event listener para beforeunload
+
     window.addEventListener('beforeunload', handleWindowClose);
 
-    // Limpiar el event listener cuando el componente se desmonte
     return () => {
       window.removeEventListener('beforeunload', handleWindowClose);
       handleWindowClose();
     };
   }, [client, username, lobbyId]);
 
-  // Manejar mensajes del WebSocket
+
   useEffect(() => {
     if (lobbyMessages.length > 0) {
       const latestMessage = lobbyMessages[lobbyMessages.length - 1];
@@ -97,8 +96,8 @@ const GameRoom = () => {
         <div className="chat-box">
         <div className="chat-messages">
   {chatMessages.map((message, index) => {
-    const parsedMessage = JSON.parse(message); // Parsear el mensaje JSON
-    return <p key={index}>{parsedMessage.mensaje}</p>; // Mostrar solo el texto
+    const parsedMessage = JSON.parse(message); 
+    return <p key={index}>{parsedMessage.mensaje}</p>; 
   })}
 </div>
           <div className="chat-input">

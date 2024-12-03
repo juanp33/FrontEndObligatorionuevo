@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import MasterPage from './masterPage'; // Asegúrate de ajustar la ruta según tu proyecto.
-import '../styles/registro.css'; // Archivo de estilos con los ajustes necesarios.
+import MasterPage from './masterPage'; 
+import '../styles/registro.css'; 
 
 const PaginaRegistro = () => {
   const [username, setUsername] = useState('');

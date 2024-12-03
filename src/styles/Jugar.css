@@ -31,8 +31,8 @@
 }
 
 .play-button:hover {
-  background-color: #e46f1b; /* Un tono más oscuro al pasar el mouse */
-  transform: scale(1.05); /* Agranda ligeramente el botón */
+  background-color: #e46f1b; 
+  transform: scale(1.05); 
 }
 
 .mode-buttons {
@@ -46,11 +46,11 @@
   background-color: #DC8C50;
   color: #FFFFFF;
   font-family: 'Germania One', sans-serif;
-  font-size: 50px; /* Texto más grande */
-  width: 100%; /* El ancho será relativo al grid */
+  font-size: 50px; 
+  width: 100%; 
   height: 150px;
   margin-left: 20px;
-  margin-right: 20px; /* Incrementa la altura */
+  margin-right: 20px; 
   border-radius: 15px;
   border: none;
   cursor: pointer;
@@ -58,14 +58,14 @@
 }
 
 .mode-button:hover {
-  background-color: #c67540; /* Un tono más oscuro al pasar el mouse */
-  transform: scale(1.1); /* Agranda ligeramente el botón */
+  background-color: #c67540; 
+  transform: scale(1.1); 
 }
 
-/* Botón Ranking ocupa el ancho de dos columnas */
+
 .ranking-button {
   grid-column: span 2;
-  height: 150px; /* Mantiene la altura grande */
+  height: 150px; 
 }
 
 .user-card {
@@ -121,8 +121,8 @@
 }
 
 .cashier-button:hover {
-  background-color: #6FD2B5; /* Un tono más oscuro al pasar el mouse */
-  transform: scale(1.05); /* Agranda ligeramente el botón */
+  background-color: #6FD2B5; 
+  transform: scale(1.05); 
 }
 
 .logout-button {
@@ -139,6 +139,6 @@
 }
 
 .logout-button:hover {
-  background-color: rgba(200, 0, 0, 0.7); /* Un tono más oscuro al pasar el mouse */
-  transform: scale(1.05); /* Agranda ligeramente el botón */
+  background-color: rgba(200, 0, 0, 0.7); 
+  transform: scale(1.05);
 }

@@ -47,16 +47,16 @@ body {
     height: calc(100vh - 150px);
   }
   .opcion {
-    transition: background-color 0.3s ease; /* Transición suave */
+    transition: background-color 0.3s ease; 
   }
   
   .opcion.correct {
-    background-color: #4caf50; /* Verde para respuesta correcta */
+    background-color: #4caf50; 
     color: #fff;
   }
   
   .opcion.incorrect {
-    background-color: #f44336; /* Rojo para respuesta incorrecta */
+    background-color: #f44336; 
     color: #fff;
   }
   .turno-box, .puntos-box {

@@ -8,11 +8,11 @@ body {
   .header {
     background-color: #7FE9C7;
     text-align: center;
-    padding: 10px; /* Reducido el padding */
+    padding: 10px; 
   }
   
   .header h1 {
-    font-size: 64px; /* Tamaño reducido */
+    font-size: 64px; 
     color: #000;
     margin: 0;
   }
@@ -22,14 +22,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 120px); /* Ajustado para dar más espacio */
+    height: calc(100vh - 120px); 
     padding: 10px;
   }
   
   .back-button {
     background: none;
     border: none;
-    font-size: 30px; /* Tamaño reducido */
+    font-size: 30px;
     color: #000;
     cursor: pointer;
     align-self: flex-start;
@@ -39,25 +39,25 @@ body {
   .tarjeta-registro {
     background-color: #FFFFFF;
     border-radius: 20px;
-    width: 400px; /* Reducido el ancho */
-    padding: 20px; /* Reducido el padding */
+    width: 400px; 
+    padding: 20px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px; /* Menor separación */
+    gap: 15px; 
     font-family: 'Germania One', sans-serif;
   }
   
   .icono-persona {
-    font-size: 60px; /* Tamaño reducido */
-    color: #5A3E85; /* Color ajustado para mayor contraste */
+    font-size: 60px;
+    color: #5A3E85; 
   }
   
   .formulario-registro {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Menor espacio entre los inputs */
+    gap: 10px; 
     width: 100%;
   }
   
@@ -65,19 +65,19 @@ body {
     background: #D9D9D9;
     border: none;
     border-radius: 5px;
-    height: 40px; /* Reducido el alto */
+    height: 40px; 
     padding: 8px;
-    font-size: 16px; /* Tamaño de texto reducido */
+    font-size: 16px; 
     font-family: 'Germania One', sans-serif;
   }
   
   .boton-registrarse {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #F47F26;
-    border: 3px solid #FF9500; /* Reducido el grosor del borde */
+    border: 3px solid #FF9500; 
     border-radius: 10px;
     color: #FFFFFF;
-    font-size: 20px; /* Tamaño reducido */
-    padding: 10px; /* Reducido el padding */
+    font-size: 20px; 
+    padding: 10px; 
     cursor: pointer;
     transition: background 0.3s;
     font-family: 'Germania One', sans-serif;

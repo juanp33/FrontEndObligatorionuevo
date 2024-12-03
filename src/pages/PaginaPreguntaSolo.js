@@ -35,21 +35,21 @@ const PaginaPreguntaSolo = ({ preguntaData, onAnswer, puntos }) => {
     const acierto = opcion === preguntaData.respuestas[preguntaData.respuestaCorrecta.charCodeAt(0) - 97];
     setSelectedOption(opcion);
     setIsCorrect(acierto);
-    setIsDisabled(true); // Bloquear botones al seleccionar una opción
+    setIsDisabled(true); 
 
-    // Reproducir efectos de sonido
+   
     if (acierto) {
       audioManager.playSoundEffect('correcto');
     } else {
       audioManager.playSoundEffect('incorrecto');
     }
 
-    // Llamar a onAnswer después de un tiempo
+ 
     setTimeout(() => {
       onAnswer(acierto);
       setSelectedOption(null);
       setIsCorrect(null);
-      setIsDisabled(false); // Desbloquear botones para la próxima pregunta
+      setIsDisabled(false); 
     }, 5000);
   };
 
@@ -75,7 +75,7 @@ const PaginaPreguntaSolo = ({ preguntaData, onAnswer, puntos }) => {
                   : ''
               }`}
               onClick={() => handleOptionClick(opcion)}
-              disabled={isDisabled} // Deshabilitar si isDisabled es true
+              disabled={isDisabled} 
             >
               {opcion}
             </button>

@@ -22,34 +22,34 @@ body, html {
   align-items: center;
   justify-content: center;
   margin-bottom: 40px;
-  font-size: 24px; /* Más grande */
+  font-size: 24px; 
   color: #FFFFFF;
 }
 
 .dropdown {
   margin-left: 15px;
-  padding: 15px 20px; /* Más grande */
-  font-size: 20px; /* Texto más grande */
-  border-radius: 10px; /* Bordes redondeados */
-  border: 2px solid #ccc; /* Bordes más visibles */
+  padding: 15px 20px; 
+  font-size: 20px; 
+  border-radius: 10px; 
+  border: 2px solid #ccc; 
 }
 
 .player-table {
   width: 100%;
-  max-width: 1400px; /* Amplía el ancho */
+  max-width: 1400px; 
   background-color: #B8EBED;
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 30px; /* Más espacio interno */
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+  border-radius: 20px; 
+  padding: 30px; 
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3); 
 }
 
 .table-header, .table-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 20px; /* Más espacio entre columnas */
+  gap: 20px; 
   text-align: center;
-  font-size: 24px; /* Texto más grande */
-  padding: 20px 0; /* Más espacio vertical */
+  font-size: 24px; 
+  padding: 20px 0; 
 }
 
 .table-header {
@@ -74,15 +74,15 @@ body, html {
 }
 
 .table-cell {
-  padding: 15px; /* Más espacio interno */
+  padding: 15px; 
   text-align: center;
-  font-size: 22px; /* Texto más grande */
+  font-size: 22px;
 }
 
-/* Responsividad para pantallas medianas */
+
 @media (max-width: 768px) {
   .table-header, .table-row {
-    grid-template-columns: repeat(2, 1fr); /* Muestra dos columnas */
+    grid-template-columns: repeat(2, 1fr); 
     font-size: 20px;
     gap: 15px;
   }
@@ -98,7 +98,7 @@ body, html {
   }
 }
 
-/* Responsividad para pantallas pequeñas */
+
 @media (max-width: 480px) {
   .ranking-container {
     padding: 20px;
@@ -109,7 +109,7 @@ body, html {
   }
 
   .table-header, .table-row {
-    grid-template-columns: 1fr; /* Una columna para pantallas pequeñas */
+    grid-template-columns: 1fr; 
     text-align: left;
     font-size: 18px;
   }

@@ -20,14 +20,14 @@ const PaginaRuletaMultiplayer = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const username = localStorage.getItem('username');
-  const ruletaSpinFuncRef = useRef(null); // Ref para almacenar la función de giro de la ruleta
+  const ruletaSpinFuncRef = useRef(null); 
   const [categoria, setCategoria] = useState(null);
-  const [passToQuestion, setPassToQuestion] = useState(false); // Aquí está definido correctamente
+  const [passToQuestion, setPassToQuestion] = useState(false); 
   const [pedirPregunta, setPedirPregunta] = useState(false);
   const [puntosJugador1, setPuntosJugador1] = useState(0);
   const [puntosJugador2, setPuntosJugador2] = useState(0);
-  const [rondasCompletadas, setRondasCompletadas] = useState(0); // Contador de rondas
-  const [isGameFinished, setIsGameFinished] = useState(false); // Controla el fin del juego
+  const [rondasCompletadas, setRondasCompletadas] = useState(0); 
+  const [isGameFinished, setIsGameFinished] = useState(false); 
   const handleGoToMenu = () => {
     navigate('/jugar'); 
   };
@@ -133,7 +133,7 @@ const PaginaRuletaMultiplayer = () => {
    
     setRondasCompletadas((prev) => prev + 1);
 
-      setTurno((prevTurno) => (prevTurno === jugador1 ? jugador2 : jugador1)); // Cambiar de turno
+      setTurno((prevTurno) => (prevTurno === jugador1 ? jugador2 : jugador1)); 
     
     setPreguntaData(null);
     setPassToQuestion(false); 
